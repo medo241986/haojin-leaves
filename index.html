@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>نظام إدارة الإجازات</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--pr:#1B4FD8;--prl:#EEF2FF;--ok:#16A34A;--okl:#DCFCE7;--er:#DC2626;--erl:#FEE2E2;--wa:#D97706;--wal:#FEF3C7;--pu:#7C3AED;--pul:#EDE9FE;--te:#0D9488;--tel:#CCFBF1;--g1:#F3F4F6;--g2:#E5E7EB;--g4:#9CA3AF;--g5:#6B7280;--g6:#4B5563;--g7:#374151;--g8:#1F2937;--g9:#111827}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:linear-gradient(160deg,#1338A8,#2563EB);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px;direction:rtl}
+.phone{width:390px;min-height:844px;background:var(--g1);border-radius:44px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5);display:flex;flex-direction:column;position:relative}
+.sbar{background:white;padding:14px 24px 8px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;flex-shrink:0}
+.scr{display:none;flex:1;flex-direction:column;overflow:hidden}.scr.on{display:flex}
+.svs>div{display:none}.svs>div.on{display:block}
+/* LOGIN */
+.lwrap{background:white;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:28px 22px}
+.logo{width:72px;height:72px;background:var(--pr);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 8px 24px rgba(27,79,216,.3)}
+.lt{font-size:22px;font-weight:900;color:var(--g9);text-align:center;margin-bottom:4px}
+.ls{font-size:12px;color:var(--g5);text-align:center;margin-bottom:20px}
+.ucg{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-bottom:16px}
+.uc{border:2px solid var(--g2);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .18s;background:white}
+.uc.sel{border-color:var(--pr);background:var(--prl)}
+.ucic{width:36px;height:36px;margin:0 auto 7px;display:flex;align-items:center;justify-content:center;border-radius:10px}
+.ucic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8}
+.ucn{font-size:12px;font-weight:800;color:var(--g8)}.uc.sel .ucn{color:var(--pr)}
+.ucp{font-size:10px;color:var(--g4);margin-top:2px}
+.cbanner{background:linear-gradient(135deg,var(--pr),#1338A8);border-radius:12px;padding:12px 16px;text-align:center;width:100%;margin-top:14px}
+.cbanner .c1{font-size:12px;font-weight:900;color:white;margin-bottom:2px}
+.cbanner .c2{font-size:10px;color:rgba(255,255,255,.8)}
+.pwrap{position:relative;margin-bottom:12px;width:100%}
+.pwrap input{width:100%;padding:11px 36px 11px 44px;border:1.5px solid var(--g2);border-radius:10px;font-size:15px;font-family:inherit;direction:rtl;letter-spacing:2px;transition:border-color .2s}
+.pwrap input:focus{outline:none;border-color:var(--pr);box-shadow:0 0 0 3px rgba(27,79,216,.1)}
+.pwrap .lkico{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--g4);fill:none;stroke-width:2}
+.pwrap .shbtn{position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--pr);font-size:11px;font-weight:800;padding:4px}
+.perr{font-size:12px;color:var(--er);text-align:center;min-height:16px;margin-bottom:8px}
+/* BUTTONS */
+.btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.btn:active{opacity:.85}
+.btn-pr{background:var(--pr);color:white;box-shadow:0 4px 14px rgba(27,79,216,.3)}
+.btn-pr:disabled{background:var(--g2);box-shadow:none;cursor:not-allowed;color:var(--g4)}
+.btn-ok{background:var(--ok);color:white}.btn-er{background:var(--er);color:white}
+.btn-ero{background:var(--erl);color:var(--er);border:1.5px solid #FCA5A5}
+.btn-wao{background:var(--wal);color:var(--wa);border:1.5px solid #FCD34D}
+.btn-out{background:white;color:var(--pr);border:1.5px solid var(--pr)}
+.bsm{flex:1;padding:11px 8px;font-size:12px;border-radius:10px}
+/* HEADER */
+.hdr{background:white;padding:13px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--g2);flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ht{font-size:15px;font-weight:900;color:var(--g9)}.hs{font-size:10px;color:var(--g5);margin-top:1px}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:white;cursor:pointer;flex-shrink:0}
+.bk{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--g2);background:white;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+.bk svg{width:16px;height:16px;stroke:var(--g6);fill:none;stroke-width:2.5}
+.cnt{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 14px 82px}
+/* NAV */
+.bnav{background:white;border-top:1px solid var(--g2);display:flex;padding:6px 0 14px;flex-shrink:0}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 2px;cursor:pointer;color:var(--g4);position:relative;transition:color .15s}
+.ni.on{color:var(--pr)}.ni svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none}.ni span{font-size:9px;font-weight:800}
+.nbdg{position:absolute;top:2px;right:50%;transform:translateX(12px);background:var(--er);color:white;font-size:9px;font-weight:900;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid white}
+/* CARDS */
+.card{background:white;border-radius:14px;border:1px solid var(--g2);margin-bottom:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.chd{padding:12px 14px;border-bottom:1px solid var(--g1);display:flex;align-items:center;justify-content:space-between}
+.ct{font-size:13px;font-weight:800;color:var(--g8)}.cb{padding:12px 14px}
+/* STATS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sc{background:white;border-radius:14px;padding:14px;border:1px solid var(--g2)}
+.sc.ac{background:var(--pr);border-color:var(--pr);box-shadow:0 4px 14px rgba(27,79,216,.3)}
+.scl{font-size:10px;color:var(--g5);font-weight:700;margin-bottom:4px}.ac .scl{color:rgba(255,255,255,.7)}
+.scv{font-size:24px;font-weight:900;color:var(--g9)}.ac .scv{color:white}
+.scu{font-size:11px;color:var(--g4)}.ac .scu{color:rgba(255,255,255,.6)}
+/* BADGES */
+.bdg{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap}
+.bp{background:var(--wal);color:#92400E}.bo{background:var(--okl);color:#14532D}
+.be{background:var(--erl);color:#7F1D1D}.bm{background:var(--pul);color:#4C1D95}
+.bh{background:var(--prl);color:#1E3A8A}.bt{background:var(--tel);color:#134E4A}
+/* ROWS */
+.rrow{padding:12px 14px;border-bottom:1px solid var(--g1);cursor:pointer;transition:background .1s}
+.rrow:last-child{border-bottom:none}.rrow:active{background:#F9FAFB}
+.rrh{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.rrt{font-size:14px;font-weight:700;color:var(--g9)}.rrs{font-size:12px;color:var(--g5);margin-bottom:2px}.rrd{font-size:12px;color:var(--g6)}
+/* FORM */
+.fg{margin-bottom:13px}.fl{font-size:12px;font-weight:800;color:var(--g7);display:block;margin-bottom:5px}.req{color:var(--er)}
+.fi,.fta,.fsl{width:100%;padding:11px 13px;border:1.5px solid var(--g2);border-radius:10px;font-size:14px;color:var(--g9);background:white;font-family:inherit;transition:border-color .2s;direction:rtl;-webkit-appearance:none;appearance:none}
+.fi:focus,.fta:focus,.fsl:focus{outline:none;border-color:var(--pr)}
+.fta{min-height:80px;resize:none}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:8px 13px;border:1.5px solid var(--g2);border-radius:20px;font-size:12px;font-weight:700;color:var(--g6);cursor:pointer;background:white}
+.chip.sel{border-color:var(--pr);background:var(--prl);color:var(--pr)}
+/* INFO ROWS */
+.ir{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g1)}
+.ir:last-child{border-bottom:none}.irk{font-size:13px;color:var(--g6)}.irv{font-size:13px;font-weight:700;color:var(--g9)}
+/* IBOX */
+.ibox{border-radius:10px;padding:11px 13px;margin-bottom:10px;border:1px solid}
+.iok{background:var(--okl);border-color:#86EFAC}.iwa{background:var(--wal);border-color:#FCD34D}
+.ipr{background:var(--prl);border-color:#93C5FD}.ier{background:var(--erl);border-color:#FCA5A5}
+/* TIMELINE */
+.tli{display:flex;gap:12px;padding-bottom:14px;position:relative}
+.tli:last-child{padding-bottom:0}
+.tli:not(:last-child)::before{content:'';position:absolute;right:15px;top:28px;bottom:0;width:1px;background:var(--g2)}
+.tlic{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tlic svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.2}
+.tltx{flex:1;padding-top:3px}.tla{font-size:13px;font-weight:700;color:var(--g8)}.tlb{font-size:11px;color:var(--g5)}.tlt{font-size:10px;color:var(--g4)}
+/* TEAM */
+.tm{display:flex;align-items:center;gap:11px;padding:11px 14px;border-bottom:1px solid var(--g1)}.tm:last-child{border-bottom:none}
+.tav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:white;flex-shrink:0}
+.tin{flex:1;min-width:0}.tn{font-size:13px;font-weight:700;color:var(--g9)}.tr2{font-size:10px;color:var(--g4)}
+.ts{font-size:11px;font-weight:700}.ts.ok{color:var(--ok)}.ts.wa{color:var(--wa)}
+.slbl{font-size:10px;font-weight:800;color:var(--g4);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;margin-top:4px}
+.ftbs{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.ftbs::-webkit-scrollbar{display:none}
+.ftb{padding:6px 12px;border-radius:20px;border:1.5px solid var(--g2);font-size:11px;font-weight:700;color:var(--g5);white-space:nowrap;cursor:pointer;background:white;flex-shrink:0}
+.ftb.on{background:var(--pr);color:white;border-color:var(--pr)}
+.srch{position:relative;margin-bottom:12px}
+.srch svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--g4);fill:none;stroke-width:2}
+.srch input{width:100%;padding:10px 34px 10px 12px;border:1.5px solid var(--g2);border-radius:10px;font-size:13px;font-family:inherit;direction:rtl;background:white}
+/* CALENDAR */
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.chd2{text-align:center;font-size:9px;font-weight:800;color:var(--g4);padding:5px 0}
+.cd{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:11px;border-radius:7px;font-weight:500;color:var(--g7);cursor:pointer;position:relative}
+.cd.today{background:var(--pr);color:white;font-weight:900}.cd.lv{background:var(--okl);color:var(--ok);font-weight:700}
+.cd.wk{color:var(--g2)}.cd.hl{background:var(--erl);color:var(--er)}.cd.ot{color:var(--g2)}
+.cd.multi::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--wa)}
+/* MODAL */
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:100}
+.modal.on{display:flex}
+.msheet{background:white;border-radius:24px 24px 0 0;padding:20px 20px 24px;width:100%;animation:su .28s ease;max-height:92%;overflow-y:auto}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mhandle{width:38px;height:4px;background:var(--g2);border-radius:2px;margin:0 auto 14px}
+.mtitle{font-size:16px;font-weight:900;color:var(--g9);margin-bottom:16px}
+.msr{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.ms{background:white;border-radius:12px;padding:11px 8px;text-align:center;border:1px solid var(--g2)}
+.msn{font-size:22px;font-weight:900}.msl{font-size:10px;color:var(--g5);font-weight:700;margin-top:2px}
+.expr{display:flex;gap:8px;margin-bottom:12px}
+.bexp{flex:1;padding:11px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;border:none;font-family:inherit}
+.bexp svg{width:14px;height:14px;stroke:white;fill:none;stroke-width:2}
+.bxl{background:#16A34A;color:white}.bpd{background:var(--er);color:white}
+.chbar{display:flex;align-items:flex-end;gap:6px;height:80px;margin-bottom:6px}
+.chb{flex:1;background:var(--prl);border-radius:5px 5px 0 0;cursor:pointer;transition:background .15s;min-height:4px}
+.chb:active{background:var(--pr)}
+.arow{display:flex;gap:8px;margin-top:10px}
+.numinp{display:flex;align-items:center;gap:8px}
+.numinp input{width:60px;padding:8px;border:1.5px solid var(--g2);border-radius:8px;text-align:center;font-size:15px;font-weight:700;font-family:inherit}
+.nbtn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--g2);background:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--pr);line-height:1}
+.steps{display:flex;align-items:flex-start;margin-bottom:18px}
+.sw2{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 auto}
+.sd{width:26px;height:26px;border-radius:50%;border:2px solid var(--g2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:var(--g4);background:white}
+.sd.now{background:var(--pr);border-color:var(--pr);color:white}
+.sl{font-size:9px;color:var(--g4);white-space:nowrap}.sln{flex:1;height:2px;background:var(--g2);margin-top:12px}
+.upl{border:2px dashed var(--g2);border-radius:10px;padding:18px;text-align:center;cursor:pointer}
+.upl svg{width:24px;height:24px;stroke:var(--g2);margin:0 auto 6px;display:block;fill:none;stroke-width:2}
+.etbl-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--g1);cursor:pointer}
+.etbl-row:last-child{border-bottom:none}
+.noi{display:flex;gap:10px;padding:12px 14px;border-bottom:1px solid var(--g1);cursor:pointer}
+.noi.unrd{background:var(--prl)}
+.noic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.noic svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.notx{flex:1}.nott{font-size:13px;font-weight:700;color:var(--g9);margin-bottom:2px}.nob{font-size:11px;color:var(--g5)}.notime{font-size:10px;color:var(--g4);margin-top:2px}
+.toast{position:absolute;bottom:88px;left:50%;transform:translateX(-50%);background:var(--g9);color:white;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:700;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;max-width:340px;text-align:center;white-space:nowrap}
+.toast.on{opacity:1}
+@media print{
+  body,html{background:white!important;padding:0!important}
+  .phone{width:100%!important;border-radius:0!important;box-shadow:none!important;min-height:auto!important}
+  .sbar,.bnav,.hdr,.btn,.bk,.modal,.toast,.arow,.expr,.ftbs,.srch,.chips,.upl,.fg:last-child{display:none!important}
+  #pa{display:block!important}
+  .cnt{padding:0!important;overflow:visible!important}
+}
+#pa{display:none}
+.ph{text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #ccc}
+.ph h1{font-size:20px;font-weight:900}.ph p{font-size:12px;color:#666;margin-top:4px}
+.ptbl{width:100%;border-collapse:collapse;font-size:12px}
+.ptbl th{background:#1B4FD8;color:white;padding:8px;text-align:right}
+.ptbl td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:right}
+.psig{display:flex;justify-content:space-around;margin-top:32px;font-size:11px;text-align:center}
+.psig span{display:block;border-top:1px solid #000;width:120px;margin:0 auto;padding-top:4px}
+.pfooter{text-align:center;font-size:10px;color:#999;margin-top:16px;border-top:1px solid #eee;padding-top:8px}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="sbar"><span id="clock">9:41</span><div style="display:flex;gap:5px;align-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg><svg width="20" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x=".5" y=".5" width="18" height="11" rx="2"/><path d="M20 4v4a2 2 0 0 0 0-4z" fill="currentColor" stroke="none"/><rect x="2" y="2" width="12" height="8" rx="1" fill="currentColor" stroke="none"/></svg></div></div>
+
+<!-- LOGIN -->
+<div class="scr on" id="scr-login"><div class="lwrap">
+<div class="logo"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg></div>
+<div class="lt">نظام إدارة الإجازات</div>
+<div class="ls">اختر حسابك وأدخل كلمة المرور</div>
+<div class="ucg">
+  <div class="uc" onclick="pickR(this,'emp')"><div class="ucic" style="background:#EEF2FF;color:var(--pr)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="ucn">موظف</div><div class="ucp">كلمة مرور خاصة</div></div>
+  <div class="uc" onclick="pickR(this,'mgr')"><div class="ucic" style="background:var(--pul);color:var(--pu)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 20c0-3.31-2.69-6-6-6-.34 0-.67.03-1 .08"/></svg></div><div class="ucn">مدير مباشر</div><div class="ucp">5678</div></div>
+  <div class="uc" onclick="pickR(this,'hr')"><div class="ucic" style="background:var(--tel);color:var(--te)"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="ucn">موارد بشرية</div><div class="ucp">hr99</div></div>
+  <div class="uc" onclick="pickR(this,'gm')"><div class="ucic" style="background:#FEF3C7;color:#92400E"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="ucn">مدير عام</div><div class="ucp">gm00</div></div>
+</div>
+<div id="epw" style="width:100%;margin-bottom:12px;display:none">
+  <label class="fl">اختر اسمك <span class="req">*</span></label>
+  <select class="fsl" id="epick" onchange="clrErr()"><option value="">— اختر الموظف —</option></select>
+</div>
+<div class="pwrap">
+  <svg class="lkico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  <input type="password" id="pi" placeholder="كلمة المرور..." oninput="clrErr()">
+  <button class="shbtn" onclick="shPass()">عرض</button>
+</div>
+<div class="perr" id="pe"></div>
+<button class="btn btn-pr" id="lbtn" onclick="doLogin()" disabled style="margin-bottom:14px">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>دخول
+</button>
+<div class="cbanner"><div class="c1">🔒 تم تطويره بواسطة المبرمج / أحمد يحيى</div><div class="c2">جميع حقوق البرمجة والنشر والتوزيع محفوظة &copy; 2025</div></div>
+</div></div>
+
+<!-- EMPLOYEE -->
+<div class="scr" id="scr-emp">
+<div class="hdr">
+  <div><div class="ht" id="eht">مرحباً 👋</div><div class="hs" id="ehs">موظف</div></div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div style="position:relative;cursor:pointer" onclick="eNav(document.querySelector('#en .ni'),'notif')">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g5)" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <div id="ndot" style="position:absolute;top:-2px;left:-2px;width:8px;height:8px;background:var(--er);border-radius:50%;border:1.5px solid white;display:none"></div>
+    </div>
+    <div class="av" id="eav" style="background:var(--pr)" onclick="logout()">خج</div>
+  </div>
+</div>
+<div class="svs" id="ev">
+<div class="on cnt" id="ev-home">
+  <div class="sg">
+    <div class="sc ac"><div class="scl">رصيد اعتيادي</div><div class="scv" id="e-ann">—<span class="scu"> يوم</span></div></div>
+    <div class="sc"><div class="scl">رصيد مرضي</div><div class="scv" id="e-med">—<span class="scu"> يوم</span></div></div>
+    <div class="sc"><div class="scl">مستخدم هذا العام</div><div class="scv" id="e-used">—<span class="scu"> يوم</span></div></div>
+    <div class="sc"><div class="scl">طلبات نشطة</div><div class="scv" id="e-act">—</div></div>
+  </div>
+  <button class="btn btn-pr" style="margin-bottom:14px" onclick="eGo('new')">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>طلب إجازة جديدة
+  </button>
+  <div class="slbl">طلباتي</div>
+  <div class="card" id="erl"><div style="padding:24px;text-align:center;color:var(--g4);font-size:13px">لا توجد طلبات بعد</div></div>
+</div>
+<div class="cnt" id="ev-new">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <div class="bk" onclick="eGo('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <span style="font-size:15px;font-weight:900">طلب إجازة جديدة</span>
+  </div>
+  <div class="steps">
+    <div class="sw2"><div class="sd now">1</div><div class="sl">التفاصيل</div></div>
+    <div class="sln"></div>
+    <div class="sw2"><div class="sd">2</div><div class="sl">مراجعة</div></div>
+    <div class="sln"></div>
+    <div class="sw2"><div class="sd">3</div><div class="sl">إرسال</div></div>
+  </div>
+  <div class="fg">
+    <label class="fl">نوع الإجازة <span class="req">*</span></label>
+    <div class="chips" id="tchips">
+      <div class="chip sel" data-t="اعتيادية" data-d="1" onclick="pChip(this)">اعتيادية ✂️</div>
+      <div class="chip" data-t="مرضية" data-d="1" onclick="pChip(this)">مرضية 🏥</div>
+      <div class="chip" data-t="بدون أجر" data-d="0" onclick="pChip(this)">بدون أجر 💸</div>
+      <div class="chip" data-t="بدل يوم آخر" data-d="0" onclick="pChip(this)">بدل يوم آخر 🔄</div>
+    </div>
+    <div id="tnote" style="font-size:11px;color:var(--ok);margin-top:6px;font-weight:700">✂️ تُخصم من رصيد الاعتيادي</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg"><label class="fl">من <span class="req">*</span></label><input type="date" class="fi" id="d1" onchange="cDays()"></div>
+    <div class="fg"><label class="fl">إلى <span class="req">*</span></label><input type="date" class="fi" id="d2" onchange="cDays()"></div>
+  </div>
+  <div class="ibox ipr" id="dbox" style="margin-bottom:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:13px;font-weight:700;color:var(--pr)">عدد أيام الإجازة</div><div id="bchk" style="font-size:11px;color:var(--pr);margin-top:2px">اختر التواريخ أولاً</div></div>
+      <div id="dcnt" style="font-size:28px;font-weight:900;color:var(--pr)">—</div>
+    </div>
+  </div>
+  <div class="fg"><label class="fl">السبب</label><textarea class="fta" id="rsn" placeholder="اكتب سبب الإجازة..."></textarea></div>
+  <div class="fg"><label class="fl">إرفاق مستند</label>
+    <div class="upl" onclick="toast('اختر ملفاً من جهازك')">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <span>اضغط لرفع ملف (اختياري)</span>
+    </div>
+  </div>
+  <button class="btn btn-pr" onclick="subReq()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>إرسال الطلب
+  </button>
+</div>
+<div class="cnt" id="ev-det">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+    <div class="bk" onclick="eGo('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <span style="font-size:15px;font-weight:900">تفاصيل الطلب</span>
+    <button onclick="doPrint()" style="margin-right:auto;background:var(--prl);border:none;color:var(--pr);font-weight:700;font-size:11px;padding:6px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:4px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة
+    </button>
+  </div>
+  <div class="card"><div class="chd"><span class="ct" id="dt-tp">—</span><span class="bdg" id="dt-st">—</span></div><div class="cb">
+    <div class="ir"><span class="irk">الفترة</span><span class="irv" id="dt-dt">—</span></div>
+    <div class="ir"><span class="irk">عدد الأيام</span><span class="irv" id="dt-dy" style="color:var(--pr)">—</span></div>
+    <div class="ir"><span class="irk">خصم من الرصيد</span><span class="irv" id="dt-dd">—</span></div>
+    <div class="ir"><span class="irk">السبب</span><span class="irv" id="dt-rs">—</span></div>
+    <div class="ir"><span class="irk">تاريخ التقديم</span><span class="irv" id="dt-sd">—</span></div>
+  </div></div>
+  <div class="slbl">مسار الطلب</div>
+  <div class="card"><div class="cb" id="dt-tl"></div></div>
+  <div class="arow">
+    <button class="btn btn-ero bsm" id="cancbtn" onclick="cancelR()" style="display:none">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>إلغاء الطلب
+    </button>
+  </div>
+  <!-- PRINT AREA -->
+  <div id="pa" style="display:none">
+    <div class="ph"><h1>إذن إجازة</h1><p id="pa-co">نظام إدارة الإجازات</p></div>
+    <table class="ptbl">
+      <tr><th>اسم الموظف</th><td id="pa-nm">—</td><th>رقم الموظف</th><td id="pa-no">—</td></tr>
+      <tr><th>القسم</th><td id="pa-dp">—</td><th>نوع الإجازة</th><td id="pa-tp">—</td></tr>
+      <tr><th>من</th><td id="pa-s">—</td><th>إلى</th><td id="pa-e">—</td></tr>
+      <tr><th>عدد الأيام</th><td id="pa-dy">—</td><th>خصم من الرصيد</th><td id="pa-dd">—</td></tr>
+      <tr><th>السبب</th><td colspan="3" id="pa-rs">—</td></tr>
+      <tr><th>الحالة</th><td colspan="3" id="pa-st">—</td></tr>
+    </table>
+    <div class="psig">
+      <div><span>توقيع الموظف</span></div>
+      <div><span>توقيع المدير</span></div>
+      <div><span>اعتماد الموارد البشرية</span></div>
+    </div>
+    <div class="pfooter">تم تطويره بواسطة المبرمج / أحمد يحيى &mdash; جميع حقوق البرمجة والنشر محفوظة &copy; 2025</div>
+  </div>
+</div>
+<div class="cnt" id="ev-cal">
+  <div class="slbl">التقويم الشخصي</div>
+  <div class="card"><div class="cb" id="ecal"></div></div>
+  <div class="slbl">الإجازات الرسمية</div>
+  <div class="card" id="ehol"></div>
+</div>
+<div class="cnt" id="ev-notif">
+  <div class="slbl">الإشعارات</div>
+  <div class="card" id="enotif"><div style="padding:24px;text-align:center;color:var(--g4);font-size:13px">لا توجد إشعارات</div></div>
+</div>
+</div>
+<div class="bnav" id="en">
+  <div class="ni on" onclick="eNav(this,'home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></div>
+  <div class="ni" onclick="eNav(this,'new')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>طلب جديد</span></div>
+  <div class="ni" onclick="eNav(this,'cal')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>التقويم</span></div>
+  <div class="ni" onclick="eNav(this,'notif')"><div class="nbdg" id="nc" style="display:none">0</div><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>إشعارات</span></div>
+</div>
+</div>
+
+<!-- MANAGER -->
+<div class="scr" id="scr-mgr">
+<div class="hdr"><div><div class="ht">لوحة المدير</div><div class="hs">مدير مباشر</div></div><div class="av" style="background:var(--pu)" onclick="logout()">م.م</div></div>
+<div class="svs" id="mv">
+<div class="on cnt" id="mv-home">
+  <div class="sg">
+    <div class="sc ac"><div class="scl">طلبات معلقة</div><div class="scv" id="mc">0</div></div>
+    <div class="sc"><div class="scl">في إجازة اليوم</div><div class="scv" id="mt">0<span class="scu"> موظف</span></div></div>
+    <div class="sc"><div class="scl">وافقت الشهر</div><div class="scv" id="mm">0</div></div>
+    <div class="sc"><div class="scl">الفريق</div><div class="scv" id="mf">0<span class="scu"> موظف</span></div></div>
+  </div>
+  <div class="slbl">طلبات تحتاج موافقتك</div>
+  <div class="card" id="mlist"></div>
+</div>
+<div class="cnt" id="mv-team">
+  <div class="slbl">حالة الفريق</div>
+  <div class="card" id="mteam"></div>
+</div>
+<div class="cnt" id="mv-cal">
+  <div class="slbl">تقويم الفريق</div>
+  <div class="card"><div class="cb" id="mcal"></div></div>
+  <div class="slbl">الإجازات الرسمية</div>
+  <div class="card" id="mhol"></div>
+</div>
+<div class="cnt" id="mv-det">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+    <div class="bk" onclick="mGo('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <span style="font-size:15px;font-weight:900">مراجعة الطلب</span>
+  </div>
+  <div class="card"><div class="cb">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="av" style="width:44px;height:44px;font-size:13px" id="md-av">—</div>
+      <div><div style="font-size:15px;font-weight:800" id="md-nm">—</div><div style="font-size:11px;color:var(--g5)" id="md-sb">—</div></div>
+    </div>
+    <div class="ir"><span class="irk">نوع الإجازة</span><span class="irv" id="md-tp">—</span></div>
+    <div class="ir"><span class="irk">الفترة</span><span class="irv" id="md-dt">—</span></div>
+    <div class="ir"><span class="irk">عدد الأيام</span><span class="irv" id="md-dy" style="color:var(--pr)">—</span></div>
+    <div class="ir"><span class="irk">خصم من الرصيد</span><span class="irv" id="md-dd">—</span></div>
+    <div class="ir"><span class="irk">السبب</span><span class="irv" id="md-rs">—</span></div>
+  </div></div>
+  <div class="ibox" id="md-bal"></div>
+  <div class="ibox iwa" id="md-con" style="display:none"></div>
+  <div class="fg"><label class="fl">ملاحظة</label><textarea class="fta" id="mnote" placeholder="ملاحظة للموظف..."></textarea></div>
+  <div class="arow">
+    <button class="btn btn-ok bsm" onclick="mAct('approve')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>موافقة</button>
+    <button class="btn btn-wao bsm" onclick="mAct('return')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>إعادة</button>
+    <button class="btn btn-ero bsm" onclick="mAct('reject')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>رفض</button>
+  </div>
+</div>
+</div>
+<div class="bnav" id="mn">
+  <div class="ni on" onclick="mNav(this,'home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></div>
+  <div class="ni" onclick="mNav(this,'team')"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>الفريق</span></div>
+  <div class="ni" onclick="mNav(this,'cal')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>التقويم</span></div>
+  <div class="ni" onclick="mNav(this,'home')"><div class="nbdg" id="mbdg" style="display:none">0</div><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>إشعارات</span></div>
+</div>
+</div>
+
+<!-- HR -->
+<div class="scr" id="scr-hr">
+<div class="hdr"><div><div class="ht">موارد بشرية</div><div class="hs">الاعتمادات النهائية</div></div><div class="av" style="background:var(--te)" onclick="logout()">م.ب</div></div>
+<div class="svs" id="hv">
+<div class="on cnt" id="hv-home">
+  <div class="msr">
+    <div class="ms"><div class="msn" style="color:var(--wa)" id="hpn">0</div><div class="msl">تحتاج اعتماد</div></div>
+    <div class="ms"><div class="msn" style="color:var(--ok)" id="han">0</div><div class="msl">معتمدة</div></div>
+    <div class="ms"><div class="msn" style="color:var(--er)" id="hrn">0</div><div class="msl">مرفوضة</div></div>
+  </div>
+  <div class="ftbs">
+    <div class="ftb on" onclick="hTab(this,'all')">الكل</div>
+    <div class="ftb" onclick="hTab(this,'hr_pending')">تحتاج اعتماد</div>
+    <div class="ftb" onclick="hTab(this,'hr_approved')">معتمدة</div>
+    <div class="ftb" onclick="hTab(this,'rejected')">مرفوضة</div>
+  </div>
+  <div class="expr">
+    <button class="bexp bxl" onclick="pRep('hr')"><svg viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة التقرير</button>
+    <button class="bexp bpd" onclick="bulkOk()"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>اعتماد جماعي</button>
+  </div>
+  <div class="card" id="hlist"></div>
+</div>
+<div class="cnt" id="hv-det">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+    <div class="bk" onclick="hGo('home')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></div>
+    <span style="font-size:15px;font-weight:900">اعتماد نهائي</span>
+    <button onclick="doPrint()" style="margin-right:auto;background:var(--prl);border:none;color:var(--pr);font-weight:700;font-size:11px;padding:6px 12px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:4px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة
+    </button>
+  </div>
+  <div class="card"><div class="cb">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div class="av" style="width:44px;height:44px;font-size:13px" id="hd-av">—</div>
+      <div><div style="font-size:15px;font-weight:800" id="hd-nm">—</div><div style="font-size:11px;color:var(--g5)" id="hd-sb">—</div></div>
+    </div>
+    <div class="ir"><span class="irk">نوع الإجازة</span><span class="irv" id="hd-tp">—</span></div>
+    <div class="ir"><span class="irk">الفترة</span><span class="irv" id="hd-dt">—</span></div>
+    <div class="ir"><span class="irk">عدد الأيام</span><span class="irv" id="hd-dy" style="color:var(--pr)">—</span></div>
+    <div class="ir"><span class="irk">خصم من الرصيد</span><span class="irv" id="hd-dd">—</span></div>
+    <div class="ir"><span class="irk">الرصيد بعد الخصم</span><span class="irv" id="hd-af" style="color:var(--ok)">—</span></div>
+  </div></div>
+  <div class="slbl">سجل الإجراءات</div>
+  <div class="card"><div class="cb" id="hd-tl"></div></div>
+  <div class="fg"><label class="fl">ملاحظة موارد البشرية</label><textarea class="fta" id="hnote" placeholder="ملاحظة تُسجّل في سجل الموظف..."></textarea></div>
+  <div class="arow">
+    <button class="btn btn-ok bsm" onclick="hAct('approve')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>اعتماد نهائي</button>
+    <button class="btn btn-ero bsm" onclick="hAct('reject')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>رفض</button>
+  </div>
+</div>
+<div class="cnt" id="hv-rep">
+  <div class="slbl">من في إجازة اليوم؟</div>
+  <div class="card" id="hrep-today"></div>
+  <div class="slbl" style="margin-top:4px">ملخص الطلبات</div>
+  <div class="card"><div class="cb">
+    <div class="ir"><span class="irk">إجمالي الطلبات</span><span class="irv" id="rt">—</span></div>
+    <div class="ir"><span class="irk">معتمدة</span><span class="irv" id="ra" style="color:var(--ok)">—</span></div>
+    <div class="ir"><span class="irk">مرفوضة</span><span class="irv" id="rr" style="color:var(--er)">—</span></div>
+    <div class="ir"><span class="irk">أيام إجازة منفّذة</span><span class="irv" id="rd">—</span></div>
+  </div></div>
+  <div class="slbl">توزيع حسب النوع</div>
+  <div class="card"><div class="cb" id="rchart"></div></div>
+  <div class="slbl">الإجازات الرسمية</div>
+  <div class="card" id="hrep-hol"></div>
+  <button class="btn btn-out" onclick="pRep('today')" style="margin-bottom:10px">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة تقرير اليوم
+  </button>
+</div>
+<div class="cnt" id="hv-hol">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="slbl" style="margin:0">الإجازات الرسمية</div>
+    <button onclick="addHol()" style="background:var(--pr);color:white;border:none;padding:6px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer">+ إضافة</button>
+  </div>
+  <div class="card" id="hollist"></div>
+</div>
+</div>
+<div class="bnav" id="hn">
+  <div class="ni on" onclick="hNav(this,'home')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></div>
+  <div class="ni" onclick="hNav(this,'rep')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>التقارير</span></div>
+  <div class="ni" onclick="hNav(this,'hol')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01"/></svg><span>إجازات رسمية</span></div>
+  <div class="ni" onclick="hNav(this,'home')"><div class="nbdg" id="hbdg" style="display:none">0</div><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>الطلبات</span></div>
+</div>
+</div>
+
+<!-- GM -->
+<div class="scr" id="scr-gm">
+<div class="hdr"><div><div class="ht">المدير العام</div><div class="hs">لوحة التحكم الكاملة</div></div><div class="av" style="background:#92400E" onclick="logout()">م.ع</div></div>
+<div class="svs" id="gmv">
+<div class="on cnt" id="gm-dash">
+  <div class="sg">
+    <div class="sc ac"><div class="scl">إجمالي الموظفين</div><div class="scv" id="gmt">0</div></div>
+    <div class="sc"><div class="scl">في إجازة اليوم</div><div class="scv" id="gml">0<span class="scu"> موظف</span></div></div>
+    <div class="sc"><div class="scl">طلبات هذا الشهر</div><div class="scv" id="gmm">0</div></div>
+    <div class="sc"><div class="scl">نسبة الموافقة</div><div class="scv" id="gmr">—<span class="scu">%</span></div></div>
+  </div>
+  <div style="display:flex;gap:8px;margin-bottom:12px">
+    <button class="btn btn-pr" style="flex:1;padding:11px;font-size:13px" onclick="addEmp()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>إضافة موظف
+    </button>
+    <button class="btn btn-out" style="flex:1;padding:11px;font-size:13px" onclick="pRep('gm')">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>تقرير كامل
+    </button>
+  </div>
+  <div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="ابحث باسم الموظف أو القسم..." id="esrch" oninput="filtE()"></div>
+  <div class="card" id="gelist"></div>
+</div>
+<div class="cnt" id="gm-rep">
+  <div class="slbl">من في إجازة اليوم؟</div>
+  <div class="card" id="grep-today"></div>
+  <div class="slbl" style="margin-top:4px">ملخص المنشأة</div>
+  <div class="card"><div class="cb">
+    <div class="ir"><span class="irk">إجمالي الموظفين</span><span class="irv" id="gr-tot">—</span></div>
+    <div class="ir"><span class="irk">طلبات هذا الشهر</span><span class="irv" id="gr-mon">—</span></div>
+    <div class="ir"><span class="irk">أيام إجازة منفّذة</span><span class="irv" id="gr-days">—</span></div>
+    <div class="ir"><span class="irk">نسبة الموافقة</span><span class="irv" id="gr-rate" style="color:var(--ok)">—</span></div>
+  </div></div>
+  <button class="btn btn-out" onclick="pRep('gm')">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>طباعة التقرير الكامل
+  </button>
+</div>
+<div class="cnt" id="gm-set">
+  <div class="slbl">إعدادات الأرصدة</div>
+  <div class="card"><div class="cb">
+    <div class="ir"><span class="irk">الرصيد الاعتيادي / سنة</span>
+      <div class="numinp"><button class="nbtn" onclick="adj2('sa',-1)">−</button><input type="number" id="sa" value="30" min="1" max="365"><button class="nbtn" onclick="adj2('sa',1)">+</button></div></div>
+    <div class="ir"><span class="irk">الرصيد المرضي / سنة</span>
+      <div class="numinp"><button class="nbtn" onclick="adj2('sm',-1)">−</button><input type="number" id="sm" value="30" min="1" max="365"><button class="nbtn" onclick="adj2('sm',1)">+</button></div></div>
+    <div class="ir"><span class="irk">حد الإجازات في القسم (%)</span>
+      <div class="numinp"><button class="nbtn" onclick="adj2('sl',-5)">−</button><input type="number" id="sl" value="30" min="5" max="100"><button class="nbtn" onclick="adj2('sl',5)">+</button></div></div>
+  </div></div>
+  <button class="btn btn-pr" onclick="savSet()" style="margin-bottom:12px">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>حفظ الإعدادات
+  </button>
+  <div class="slbl">كلمات مرور الأدوار</div>
+  <div class="card"><div class="cb">
+    <div class="ir"><span class="irk">مدير مباشر</span><span class="irv" style="letter-spacing:2px;color:var(--pu)">5678</span></div>
+    <div class="ir"><span class="irk">موارد بشرية</span><span class="irv" style="letter-spacing:2px;color:var(--te)">hr99</span></div>
+    <div class="ir"><span class="irk">مدير عام</span><span class="irv" style="letter-spacing:2px;color:#92400E">gm00</span></div>
+  </div></div>
+  <div class="slbl" style="color:var(--er);margin-top:8px">منطقة الخطر</div>
+  <button class="btn btn-ero" onclick="resetSys()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>تصفير النظام (حذف كل البيانات)
+  </button>
+</div>
+</div>
+<div class="bnav" id="gmn">
+  <div class="ni on" onclick="gNav(this,'dash')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الرئيسية</span></div>
+  <div class="ni" onclick="gNav(this,'dash');addEmp()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>إضافة موظف</span></div>
+  <div class="ni" onclick="gNav(this,'rep')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>التقارير</span></div>
+  <div class="ni" onclick="gNav(this,'set')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>الإعدادات</span></div>
+</div>
+</div>
+
+<!-- MODALS -->
+<div class="modal" id="mod-emp" onclick="cm('mod-emp')"><div class="msheet" onclick="event.stopPropagation()">
+  <div class="mhandle"></div><div class="mtitle" id="emtit">إضافة موظف</div>
+  <input type="hidden" id="eid">
+  <div class="fg"><label class="fl">الاسم الكامل <span class="req">*</span></label><input type="text" class="fi" id="fn" placeholder="أحمد محمد العمري"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="fg"><label class="fl">رقم الموظف <span class="req">*</span></label><input type="text" class="fi" id="fno" placeholder="1050"></div>
+    <div class="fg"><label class="fl">المسمى الوظيفي</label><input type="text" class="fi" id="ftit" placeholder="مندوب مبيعات"></div>
+  </div>
+  <div class="fg"><label class="fl">القسم</label>
+    <select class="fsl" id="fdept" onchange="togCD(this)">
+      <option>المبيعات</option><option>التقنية</option><option>المالية</option>
+      <option>موارد بشرية</option><option>التسويق</option><option>العمليات</option>
+      <option>المشتريات</option><option>خدمة العملاء</option><option value="other">➕ قسم آخر...</option>
+    </select>
+  </div>
+  <div class="fg" id="cdw" style="display:none"><label class="fl">اسم القسم</label><input type="text" class="fi" id="fdc" placeholder="اكتب اسم القسم..."></div>
+  <div class="fg"><label class="fl">كلمة المرور <span class="req">*</span></label><input type="text" class="fi" id="fps" placeholder="كلمة مرور خاصة بهذا الموظف فقط"></div>
+  <div class="slbl">الأرصدة السنوية (يوم)</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+    <div><label class="fl">اعتيادي</label><input type="number" class="fi" id="fan" value="30" min="0" max="365"></div>
+    <div><label class="fl">مرضي</label><input type="number" class="fi" id="fmd" value="30" min="0" max="365"></div>
+  </div>
+  <button class="btn btn-pr" onclick="saveEmp()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg><span id="etxt">حفظ الموظف</span></button>
+</div></div>
+
+<div class="modal" id="mod-bal" onclick="cm('mod-bal')"><div class="msheet" onclick="event.stopPropagation()">
+  <div class="mhandle"></div><div class="mtitle">تعديل الرصيد</div>
+  <div style="font-size:14px;font-weight:700;color:var(--g8);margin-bottom:14px" id="baln">—</div>
+  <div class="fg"><label class="fl">رصيد اعتيادي</label>
+    <div class="numinp"><button class="nbtn" onclick="adj2('ban',-1)">−</button><input type="number" id="ban" value="0" min="0" max="365"><button class="nbtn" onclick="adj2('ban',1)">+</button></div></div>
+  <div class="fg"><label class="fl">رصيد مرضي</label>
+    <div class="numinp"><button class="nbtn" onclick="adj2('bmd',-1)">−</button><input type="number" id="bmd" value="0" min="0" max="365"><button class="nbtn" onclick="adj2('bmd',1)">+</button></div></div>
+  <div class="ibox iwa" style="font-size:12px;color:#92400E">التعديل يؤثر على الرصيد المتبقي فوراً</div>
+  <button class="btn btn-pr" onclick="savBal()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>حفظ الرصيد</button>
+</div></div>
+
+<div class="modal" id="mod-prof" onclick="cm('mod-prof')"><div class="msheet" onclick="event.stopPropagation()">
+  <div class="mhandle"></div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <div class="av" style="width:50px;height:50px;font-size:15px" id="prav">—</div>
+    <div><div style="font-size:17px;font-weight:900" id="prnm">—</div><div style="font-size:12px;color:var(--g5)" id="prsb">—</div></div>
+  </div>
+  <div class="card" style="margin-bottom:12px"><div class="cb">
+    <div class="ir"><span class="irk">القسم</span><span class="irv" id="prdp">—</span></div>
+    <div class="ir"><span class="irk">رصيد اعتيادي</span><span class="irv" id="pran" style="color:var(--pr)">—</span></div>
+    <div class="ir"><span class="irk">رصيد مرضي</span><span class="irv" id="prmd" style="color:var(--ok)">—</span></div>
+    <div class="ir"><span class="irk">مستخدم هذا العام</span><span class="irv" id="prus">—</span></div>
+    <div class="ir"><span class="irk">كلمة المرور</span><span class="irv" id="prps" style="letter-spacing:2px;color:var(--g5)">—</span></div>
+  </div></div>
+  <div class="arow">
+    <button class="btn btn-out bsm" onclick="editEmp()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>تعديل</button>
+    <button class="btn bsm" style="background:var(--pul);color:var(--pu)" onclick="editBal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>الرصيد</button>
+    <button class="btn btn-ero bsm" onclick="delEmp()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>حذف</button>
+  </div>
+</div></div>
+
+<div class="modal" id="mod-hol" onclick="cm('mod-hol')"><div class="msheet" onclick="event.stopPropagation()">
+  <div class="mhandle"></div><div class="mtitle">إضافة إجازة رسمية</div>
+  <div class="fg"><label class="fl">اسم الإجازة <span class="req">*</span></label><input type="text" class="fi" id="hname" placeholder="مثال: عيد الفطر المبارك"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+    <div class="fg"><label class="fl">من</label><input type="date" class="fi" id="hstart"></div>
+    <div class="fg"><label class="fl">إلى</label><input type="date" class="fi" id="hend"></div>
+  </div>
+  <button class="btn btn-pr" onclick="savHol()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>حفظ الإجازة</button>
+</div></div>
+
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<div class="toast" id="tst"></div>
+
+<!-- SYNC STATUS BAR -->
+<div id="syncbar" style="position:absolute;top:0;left:0;right:0;z-index:500;background:#D97706;color:white;text-align:center;font-size:11px;font-weight:700;padding:4px 8px;display:none">
+  ⚠️ وضع غير متصل — البيانات محفوظة محلياً وستُزامن عند الاتصال
+</div>
+
+<script>
+/*
+  ══════════════════════════════════════════════════════
+  إعداد Firebase للمزامنة اللحظية عبر جميع الأجهزة
+  ══════════════════════════════════════════════════════
+  خطوات إنشاء قاعدة البيانات مجاناً (5 دقائق):
+  1- اذهب إلى: https://console.firebase.google.com
+  2- أنشئ مشروعاً جديداً (New Project)
+  3- من القائمة اختر: Build → Realtime Database → Create Database
+  4- اختر: Start in test mode → Enable
+  5- اذهب إلى: Project Settings (⚙️) → General → Your apps → </> Web
+  6- انسخ قيم apiKey و databaseURL واستبدلها أدناه
+  7- في Realtime Database → Rules، اكتب:
+     {"rules":{".read":true,".write":true}}
+*/
+var FB_CFG = {
+  apiKey:      "AIzaSyDuuIxOeBkDd-7ggFvgn_GfC7SCENdJrJ4",
+  databaseURL: "https://haojin-leaves-default-rtdb.firebaseio.com"
+};
+
+var SK='hjv4';
+var PW={mgr:'5678',hr:'hr99',gm:'gm00'};
+var emps=[],reqs=[],hols=[];
+var neid=1,nrid=1;
+var role=null,ceid=null,seid=null,orid=null,hf='all';
+var db=null,fbOK=false,syncPending=false;
+// شريط حالة الاتصال
+var _sb=null;
+function showSyncBar(msg,color){
+  if(!_sb)_sb=document.getElementById('syncbar');
+  if(!_sb)return;
+  _sb.textContent=msg;_sb.style.background=color||'#D97706';_sb.style.display='block';
+}
+function hideSyncBar(){if(!_sb)_sb=document.getElementById('syncbar');if(_sb)_sb.style.display='none';}
+
+/* ═══════════════════ FIREBASE INIT & SYNC ═══════════════════ */
+function initFB(){
+  // تحميل البيانات المحلية أولاً (يعمل فوراً بدون إنترنت)
+  ldLocal();ppick();
+  // تحقق إذا كان الـ config صحيحاً
+  if(FB_CFG.apiKey==='PASTE_YOUR_API_KEY_HERE'||!FB_CFG.databaseURL||FB_CFG.databaseURL==='PASTE_YOUR_DATABASE_URL_HERE'){
+    showSyncBar('⚠️ وضع محلي — أضف Firebase config للمزامنة بين الأجهزة','#6B7280');
+    return;
+  }
+  try{
+    if(!firebase.apps||!firebase.apps.length){firebase.initializeApp(FB_CFG);}
+    db=firebase.database();
+    showSyncBar('🔄 جاري الاتصال...','#D97706');
+    // مراقب الاتصال
+    db.ref('.info/connected').on('value',function(snap){
+      if(snap.val()){
+        hideSyncBar();
+        if(!fbOK){fbOK=true;startListeners();}
+      }else{
+        showSyncBar('⚠️ غير متصل — البيانات محفوظة محلياً وستُزامن عند الاتصال','#D97706');
+      }
+    });
+  }catch(e){
+    showSyncBar('⚠️ خطأ في Firebase — وضع محلي فقط','#EF4444');
+    console.error('Firebase error:',e);
+  }
+}
+
+function startListeners(){
+  // مستمع الموظفين
+  db.ref('data/emps').on('value',function(snap){
+    var v=snap.val();
+    if(v===null||v===undefined){return;}
+    var arr=Array.isArray(v)?v:Object.values(v);
+    emps=arr.filter(Boolean);
+    neid=emps.length>0?Math.max.apply(Math,emps.map(function(e){return e.id||0}))+1:1;
+    svLocal();ppick();
+    if(role==='emp')rEHome();
+    if(role==='mgr')rMHome();
+    if(role==='hr')rHList();
+    if(role==='gm'){rGEmps();rGStats();}
+  });
+  // مستمع الطلبات
+  db.ref('data/reqs').on('value',function(snap){
+    var v=snap.val();
+    if(v===null||v===undefined){return;}
+    var arr=Array.isArray(v)?v:Object.values(v);
+    reqs=arr.filter(Boolean);
+    nrid=reqs.length>0?Math.max.apply(Math,reqs.map(function(r){return r.id||0}))+1:1;
+    svLocal();
+    if(role==='emp'){rEHome();upND();}
+    if(role==='mgr')rMHome();
+    if(role==='hr'){rHList();upHB();}
+    if(role==='gm'){rGEmps();rGStats();}
+  });
+  // مستمع الإجازات الرسمية
+  db.ref('data/hols').on('value',function(snap){
+    var v=snap.val();
+    if(v===null||v===undefined){hols=[];return;}
+    var arr=Array.isArray(v)?v:Object.values(v);
+    hols=arr.filter(Boolean);
+    svLocal();
+  });
+  // اسحب البيانات المحلية لـ Firebase (للمرة الأولى فقط إذا Firebase فارغ)
+  db.ref('data').once('value',function(snap){
+    if(!snap.val()){
+      // Firebase فارغ — ارفع البيانات المحلية
+      pushToFB();
+    }
+  });
+}
+
+function pushToFB(){
+  if(!db||!fbOK)return;
+  var eObj={},rObj={},hObj={};
+  emps.forEach(function(e){if(e&&e.id)eObj['e'+e.id]=e;});
+  reqs.forEach(function(r){if(r&&r.id)rObj['r'+r.id]=r;});
+  hols.forEach(function(h,i){if(h)hObj['h'+i]=h;});
+  db.ref('data/emps').set(Object.keys(eObj).length?eObj:null);
+  db.ref('data/reqs').set(Object.keys(rObj).length?rObj:null);
+  db.ref('data/hols').set(Object.keys(hObj).length?hObj:null);
+}
+
+/* ═══════════════════ SAVE — LOCAL + FIREBASE ═══════════════════ */
+function sv2(){
+  svLocal();
+  if(!db||!fbOK){return;}
+  var eObj={},rObj={},hObj={};
+  emps.forEach(function(e){if(e&&e.id)eObj['e'+e.id]=e;});
+  reqs.forEach(function(r){if(r&&r.id)rObj['r'+r.id]=r;});
+  hols.forEach(function(h,i){if(h)hObj['h'+i]=h;});
+  db.ref('data/emps').set(Object.keys(eObj).length?eObj:null);
+  db.ref('data/reqs').set(Object.keys(rObj).length?rObj:null);
+  db.ref('data/hols').set(Object.keys(hObj).length?hObj:null);
+}
+
+/* ═══════════════════ LOCAL STORAGE ═══════════════════ */
+function svLocal(){
+  try{localStorage.setItem(SK,JSON.stringify({emps:emps,reqs:reqs,hols:hols,neid:neid,nrid:nrid}));}catch(e){}
+}
+function ldLocal(){
+  try{
+    var d=JSON.parse(localStorage.getItem(SK)||'null');
+    if(!d)return;
+    emps=d.emps||[];reqs=d.reqs||[];hols=d.hols||[];
+    neid=d.neid||(Math.max.apply(Math,emps.map(function(e){return e.id||0}).concat([0]))+1);
+    nrid=d.nrid||(Math.max.apply(Math,reqs.map(function(r){return r.id||0}).concat([0]))+1);
+  }catch(e){}
+}
+
+/* ═══════════════════ HELPERS ═══════════════════ */
+function ini(n){var p=(n||'').split(' ');return p.length>1?p[0][0]+p[1][0]:(p[0]||'?').substring(0,2)}
+function td(){return new Date().toISOString().split('T')[0]}
+function fmt(d){if(!d)return'—';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
+function dbt(a,b){var d1=new Date(a),d2=new Date(b);if(isNaN(d1)||isNaN(d2)||d1>d2)return 0;return Math.round((d2-d1)/86400000)+1}
+function onLv(e){var t=td();return reqs.some(function(r){return r.eid===e.id&&r.st==='hr_approved'&&r.s<=t&&r.e>=t})}
+function sLbl(s){return{manager_pending:'عند المدير',hr_pending:'عند موارد البشرية',hr_approved:'معتمدة ✓',rejected:'مرفوضة ✗',cancelled:'ملغية'}[s]||s}
+function sCls(s){return{manager_pending:'bm',hr_pending:'bh',hr_approved:'bo',rejected:'be',cancelled:'bt'}[s]||'bp'}
+function CLRS(){return['#3B82F6','#F59E0B','#EF4444','#8B5CF6','#059669','#EC4899','#0891B2','#D97706','#7C3AED','#DC2626']}
+var tt=null;
+function toast(m){var t=document.getElementById('tst');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on')},2800)}
+function om(id){document.getElementById(id).classList.add('on')}
+function cm(id){document.getElementById(id).classList.remove('on')}
+function svs(c,v){document.querySelectorAll('#'+c+'>div').forEach(function(d){d.classList.remove('on')});document.getElementById(v).classList.add('on')}
+function eGo(v){svs('ev','ev-'+v)}
+function mGo(v){svs('mv','mv-'+v)}
+function hGo(v){svs('hv','hv-'+v)}
+function gGo(v){svs('gmv','gm-'+v)}
+function setN(id,el){document.querySelectorAll('#'+id+' .ni').forEach(function(i){i.classList.remove('on')});el.classList.add('on')}
+function eNav(el,v){setN('en',el);eGo(v);if(v==='cal'){rECal()}if(v==='notif'){rNotif()}}
+function mNav(el,v){setN('mn',el);mGo(v);if(v==='team')rMTeam();if(v==='cal')rMCal()}
+function hNav(el,v){setN('hn',el);hGo(v);if(v==='rep')rHRep();if(v==='hol')rHols()}
+function gNav(el,v){setN('gmn',el);gGo(v);if(v==='rep')rGRep()}
+function hTab(el,f){document.querySelectorAll('#hv-home .ftb').forEach(function(t){t.classList.remove('on')});el.classList.add('on');hf=f;rHList()}
+function adj2(id,d){var i=document.getElementById(id);i.value=Math.max(parseInt(i.min)||0,Math.min(parseInt(i.max)||365,parseInt(i.value||0)+d))}
+function togCD(s){document.getElementById('cdw').style.display=s.value==='other'?'block':'none'}
+function getDept(){var s=document.getElementById('fdept');return s.value==='other'?(document.getElementById('fdc').value.trim()||'غير محدد'):s.value}
+function setDept(v){var s=document.getElementById('fdept');var f=Array.from(s.options).some(function(o){if(o.value===v||o.text===v){s.value=o.value;return true}return false});if(!f){s.value='other';document.getElementById('cdw').style.display='block';document.getElementById('fdc').value=v}else{document.getElementById('cdw').style.display='none'}}
+function clrErr(){document.getElementById('pe').textContent=''}
+function shPass(){var i=document.getElementById('pi'),b=document.querySelector('.shbtn');if(i.type==='password'){i.type='text';b.textContent='إخفاء'}else{i.type='password';b.textContent='عرض'}}
+function tli(cls,av,act,tm){var c={ok:'background:var(--okl);color:var(--ok)',wa:'background:var(--wal);color:var(--wa)',er:'background:var(--erl);color:var(--er)'}[cls]||'';var ic={ok:'<polyline points="20 6 9 17 4 12"/>',wa:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',er:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>'}[cls]||'';return'<div class="tli"><div class="tlic" style="'+c+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">'+ic+'</svg></div><div class="tltx"><div class="tla">'+av+'</div><div class="tlb">'+act+'</div><div class="tlt">'+tm+'</div></div></div>'}
+function fillPA(r,emp){
+  // احفظ البيانات على المتغير العام عشان doPrint يلاقيها
+  window._printData={r:r,emp:emp};
+}
+function doPrint(){
+  var pd=window._printData;
+  if(!pd||!pd.r){toast('لا توجد بيانات للطباعة');return;}
+  var r=pd.r,emp=pd.emp||{};
+  var balAfter=r.ded?Math.max(0,(r.type==='اعتيادية'?(emp.ann||0):(emp.med||0))-r.days)+' يوم':'لا يوجد خصم';
+  var stcls=r.st==='hr_approved'?'approved':r.st==='rejected'?'rejected':'pending';
+  var h='<!DOCTYPE html><html dir="rtl"><head><meta charset="UTF-8"><title>إذن إجازة</title><style>';
+  h+='*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;direction:rtl;padding:20px;color:#111;font-size:12px}';
+  h+='.hd{text-align:center;border-bottom:3px solid #1B4FD8;padding-bottom:12px;margin-bottom:16px}.hd h1{font-size:20px;font-weight:900;color:#1B4FD8}.hd p{font-size:11px;color:#888;margin-top:3px}';
+  h+='.stb{display:inline-block;padding:3px 14px;border-radius:20px;font-weight:700;font-size:12px;margin-bottom:14px}';
+  h+='.approved{background:#DCFCE7;color:#14532D}.rejected{background:#FEE2E2;color:#7F1D1D}.pending{background:#FEF3C7;color:#92400E}';
+  h+='table{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:12px}th{background:#1B4FD8;color:white;padding:7px 10px;text-align:right;font-weight:700}th.s{background:#374151}td{padding:7px 10px;border-bottom:1px solid #E5E7EB}tr:nth-child(even) td{background:#F9FAFB}';
+  h+='.nb{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;padding:10px;margin-bottom:10px}.nb h3{font-size:11px;font-weight:700;color:#1E40AF;margin-bottom:4px}.nb p{font-size:12px;color:#1E3A8A}';
+  h+='.sigs{display:flex;justify-content:space-between;margin-top:28px;gap:12px}.sig{flex:1;text-align:center}.snm{font-size:12px;font-weight:700;margin-bottom:2px}.sdt{font-size:10px;color:#888;margin-bottom:22px;min-height:14px}.sln{border-top:1px solid #374151;padding-top:5px;font-size:10px;color:#6B7280;font-weight:700}';
+  h+='.footer{text-align:center;font-size:10px;color:#aaa;margin-top:20px;padding-top:10px;border-top:1px solid #eee}';
+  h+='@media print{body{padding:10px}}';
+  h+='</style></head><body>';
+  h+='<div class="hd"><h1>&#x1F4CB; إذن إجازة</h1><p>تاريخ الطباعة: '+fmt(td())+'</p></div>';
+  h+='<div style="text-align:center;margin-bottom:12px"><span class="stb '+stcls+'">'+sLbl(r.st)+'</span></div>';
+  h+='<table>';
+  h+='<tr><th class="s" colspan="4">بيانات الموظف</th></tr>';
+  h+='<tr><th>الاسم الكامل</th><td>'+(emp.name||'—')+'</td><th>رقم الموظف</th><td>'+(emp.no||'—')+'</td></tr>';
+  h+='<tr><th>القسم</th><td>'+(emp.dept||'—')+'</td><th>المسمى الوظيفي</th><td>'+(emp.title||'—')+'</td></tr>';
+  h+='<tr><th class="s" colspan="4">بيانات الإجازة</th></tr>';
+  h+='<tr><th>نوع الإجازة</th><td>'+r.type+'</td><th>تاريخ التقديم</th><td>'+fmt(r.sub)+'</td></tr>';
+  h+='<tr><th>من</th><td>'+fmt(r.s)+'</td><th>إلى</th><td>'+fmt(r.e)+'</td></tr>';
+  h+='<tr><th>عدد الأيام</th><td>'+r.days+' أيام</td><th>خصم من الرصيد</th><td>'+(r.ded?'نعم — من رصيد '+r.type:'لا يُخصم')+'</td></tr>';
+  h+='<tr><th>الرصيد بعد الخصم</th><td>'+balAfter+'</td><th>الرصيد الاعتيادي الحالي</th><td>'+(emp.ann!==undefined?emp.ann+' يوم':'—')+'</td></tr>';
+  h+='<tr><th>السبب</th><td colspan="3">'+(r.rsn||'—')+'</td></tr>';
+  h+='</table>';
+  if(r.mgr_note)h+='<div class="nb"><h3>&#x1F4DD; ملاحظة المدير المباشر</h3><p>'+r.mgr_note+'</p></div>';
+  if(r.hr_note)h+='<div class="nb"><h3>&#x1F4DD; ملاحظة موارد البشرية</h3><p>'+r.hr_note+'</p></div>';
+  h+='<div class="sigs">';
+  h+='<div class="sig"><div class="snm">'+(emp.name||'الموظف')+'</div><div class="sdt">&nbsp;</div><div class="sln">توقيع الموظف</div></div>';
+  h+='<div class="sig"><div class="snm">المدير المباشر</div><div class="sdt">'+(r.mgr_date?fmt(r.mgr_date):'&nbsp;')+'</div><div class="sln">توقيع المدير المباشر</div></div>';
+  h+='<div class="sig"><div class="snm">مدير الموارد البشرية</div><div class="sdt">'+(r.hr_date?fmt(r.hr_date):'&nbsp;')+'</div><div class="sln">توقيع مدير الموارد البشرية</div></div>';
+  h+='</div>';
+  h+='<div class="footer">تم تطويره بواسطة المبرمج / أحمد يحيى &mdash; جميع حقوق البرمجة والنشر محفوظة &copy; 2025</div>';
+  h+='</body></html>';
+  // طباعة بـ iframe مخفي (بدون popup)
+  var fr=document.getElementById('print-frame');
+  fr.removeAttribute('sandbox');
+  fr.srcdoc=h;
+  fr.onload=function(){
+    try{fr.contentWindow.focus();fr.contentWindow.print();}catch(e){
+      // fallback: blob URL
+      var blob=new Blob([h],{type:'text/html;charset=utf-8'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');a.href=url;a.download='ijaza.html';a.click();
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    }
+  };
+}
+
+/* LOGIN */
+var pr=null;
+function pickR(el,r){document.querySelectorAll('.uc').forEach(function(c){c.classList.remove('sel')});el.classList.add('sel');pr=r;clrErr();document.getElementById('pi').value='';document.getElementById('lbtn').disabled=false;var ew=document.getElementById('epw');if(r==='emp'){ew.style.display='block';ppick()}else{ew.style.display='none';document.getElementById('pi').focus()}}
+function ppick(){var s=document.getElementById('epick');s.innerHTML='<option value="">— اختر الموظف —</option>';emps.forEach(function(e){var o=document.createElement('option');o.value=e.id;o.textContent=e.name+' ('+e.dept+')';s.appendChild(o)})}
+function doLogin(){
+  if(!pr)return;
+  var p=String(document.getElementById('pi').value).trim();
+  if(!p){document.getElementById('pe').textContent='أدخل كلمة المرور أولاً';return}
+  if(pr==='emp'){
+    var eid=parseInt(document.getElementById('epick').value);
+    if(!eid){document.getElementById('pe').textContent='اختر اسمك من القائمة أولاً';return}
+    var emp=emps.find(function(e){return e.id===eid});
+    if(!emp){document.getElementById('pe').textContent='الموظف غير موجود';return}
+    if(p!==String(emp.ps||'').trim()){document.getElementById('pe').textContent='كلمة المرور غير صحيحة';document.getElementById('pi').value='';return}
+    ceid=emp.id;
+  }else{
+    if(p!==PW[pr]){document.getElementById('pe').textContent='كلمة المرور غير صحيحة';document.getElementById('pi').value='';return}
+  }
+  role=pr;
+  document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on')});
+  document.getElementById('scr-'+pr).classList.add('on');
+  toast('مرحباً بك 🎉');
+  if(pr==='emp'){initE()}
+  if(pr==='mgr'){rMHome()}
+  if(pr==='hr'){rHList();upHB()}
+  if(pr==='gm'){rGEmps();rGStats()}
+}
+document.getElementById('pi').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+function logout(){role=null;ceid=null;pr=null;document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on')});document.getElementById('scr-login').classList.add('on');document.querySelectorAll('.uc').forEach(function(c){c.classList.remove('sel')});document.getElementById('lbtn').disabled=true;document.getElementById('pi').value='';document.getElementById('epw').style.display='none';clrErr()}
+
+/* EMPLOYEE */
+function initE(){var emp=emps.find(function(e){return e.id===ceid});if(!emp)return;document.getElementById('eht').textContent='مرحباً، '+emp.name.split(' ')[0]+' 👋';document.getElementById('ehs').textContent='موظف — قسم '+emp.dept;document.getElementById('eav').textContent=ini(emp.name);document.getElementById('eav').style.background=emp.color||'#3B82F6';var t=td();document.getElementById('d1').value=t;document.getElementById('d2').value=t;cDays();rEHome()}
+function rEHome(){
+  var emp=emps.find(function(e){return e.id===ceid});if(!emp)return;
+  document.getElementById('e-ann').innerHTML=emp.ann+'<span class="scu"> يوم</span>';
+  document.getElementById('e-med').innerHTML=emp.med+'<span class="scu"> يوم</span>';
+  document.getElementById('e-used').innerHTML=(emp.used||0)+'<span class="scu"> يوم</span>';
+  var act=reqs.filter(function(r){return r.eid===ceid&&(r.st==='manager_pending'||r.st==='hr_pending')}).length;
+  document.getElementById('e-act').textContent=act;
+  var mine=reqs.filter(function(r){return r.eid===ceid}).slice().reverse();
+  var h='';
+  if(!mine.length){h='<div style="padding:24px;text-align:center;color:var(--g4);font-size:13px">لا توجد طلبات بعد</div>'}
+  else mine.forEach(function(r){h+='<div class="rrow" onclick="oER('+r.id+')">'+'<div class="rrh"><span class="rrt">إجازة '+r.type+'</span><span class="bdg '+sCls(r.st)+'">'+sLbl(r.st)+'</span></div>'+'<div class="rrs">'+fmt(r.s)+' — '+fmt(r.e)+' • '+r.days+' أيام</div>'+'<div class="rrd" style="font-size:11px;color:'+(r.ded?'var(--er)':'var(--ok)')+';">'+(r.ded?'✂️ تُخصم من الرصيد':'✅ لا تُخصم')+'</div></div>'});
+  document.getElementById('erl').innerHTML=h;upND()}
+function pChip(el){document.querySelectorAll('#tchips .chip').forEach(function(c){c.classList.remove('sel')});el.classList.add('sel');var d=el.dataset.d==='1';var n=document.getElementById('tnote');if(d){n.style.color='var(--er)';n.textContent='✂️ تُخصم من رصيد '+(el.dataset.t==='اعتيادية'?'الاعتيادي':'المرضي')}else{n.style.color='var(--ok)';n.textContent='✅ لا تُخصم من الرصيد'}cDays()}
+function cDays(){var d1=document.getElementById('d1').value,d2=document.getElementById('d2').value;if(!d1||!d2){document.getElementById('dcnt').textContent='—';return}var days=dbt(d1,d2);document.getElementById('dcnt').textContent=days;var ch=document.querySelector('#tchips .chip.sel');var ded=ch?ch.dataset.d==='1':true;var tp=ch?ch.dataset.t:'اعتيادية';var emp=emps.find(function(e){return e.id===ceid});var bk=document.getElementById('bchk'),bx=document.getElementById('dbox');if(!ded){bk.style.color='var(--ok)';bk.textContent='✅ هذا النوع لا يُخصم من أي رصيد';bx.className='ibox iok'}else if(emp){var bal=tp==='اعتيادية'?emp.ann:emp.med;if(days>bal){bk.style.color='var(--er)';bk.textContent='⚠️ الرصيد غير كافٍ (متبقٍ '+bal+' يوم)';bx.className='ibox ier'}else{bk.style.color='var(--ok)';bk.textContent='✓ رصيد كافٍ (متبقٍ '+bal+' يوم)';bx.className='ibox iok'}}}
+function subReq(){var d1=document.getElementById('d1').value,d2=document.getElementById('d2').value;if(!d1||!d2){toast('⚠️ حدد تواريخ الإجازة');return}var days=dbt(d1,d2);if(days<1){toast('⚠️ تاريخ غير صحيح');return}var ch=document.querySelector('#tchips .chip.sel');var tp=ch?ch.dataset.t:'اعتيادية';var ded=ch?ch.dataset.d==='1':true;var rsn=document.getElementById('rsn').value.trim();var emp=emps.find(function(e){return e.id===ceid});if(ded&&emp){var bal=tp==='اعتيادية'?emp.ann:emp.med;if(days>bal){toast('⚠️ الرصيد غير كافٍ!');return}}reqs.push({id:nrid++,eid:ceid,type:tp,ded:ded,s:d1,e:d2,days:days,rsn:rsn||'—',st:'manager_pending',sub:td(),notified:false});sv2();eGo('home');rEHome();toast('✓ تم إرسال طلبك — سيصل للمدير فوراً 🔔')}
+function oER(id){
+  var r=reqs.find(function(x){return x.id===id});if(!r)return;
+  orid=id;
+  var emp=emps.find(function(e){return e.id===r.eid});
+  // بيانات الطلب
+  document.getElementById('dt-tp').textContent='إجازة '+r.type;
+  document.getElementById('dt-st').textContent=sLbl(r.st);
+  document.getElementById('dt-st').className='bdg '+sCls(r.st);
+  document.getElementById('dt-dt').textContent=fmt(r.s)+' — '+fmt(r.e);
+  document.getElementById('dt-dy').textContent=r.days+' أيام';
+  document.getElementById('dt-dd').textContent=r.ded?'نعم، من رصيد '+r.type:'لا تُخصم';
+  document.getElementById('dt-rs').textContent=r.rsn;
+  document.getElementById('dt-sd').textContent=fmt(r.sub);
+  // Timeline مع الملاحظات
+  var tl=tli('ok',ini(emp?emp.name:'م'),'قدّم الطلب',fmt(r.sub));
+  if(r.st==='hr_approved'){
+    tl+=tli('ok','م.م','وافق المدير'+(r.mgr_note?' — ملاحظة: '+r.mgr_note:''),fmt(r.mgr_date||'—'));
+    tl+=tli('ok','م.ب','اعتماد نهائي من موارد البشرية'+(r.hr_note?' — ملاحظة: '+r.hr_note:''),fmt(r.hr_date||'—'));
+  }else if(r.st==='manager_pending'){
+    tl+=tli('wa','م.م','في انتظار موافقة المدير','—');
+  }else if(r.st==='hr_pending'){
+    tl+=tli('ok','م.م','وافق المدير'+(r.mgr_note?' — '+r.mgr_note:''),fmt(r.mgr_date||'—'));
+    tl+=tli('wa','م.ب','بانتظار موارد البشرية','—');
+  }else if(r.st==='rejected'){
+    var rnote=r.hr_note||r.mgr_note||'';
+    tl+=tli('er','م.م','تم الرفض'+(rnote?' — '+rnote:''),fmt(r.mgr_date||r.hr_date||'—'));
+  }else if(r.st==='cancelled'){
+    tl+=tli('er','م','ألغى الطلب','—');
+  }
+  document.getElementById('dt-tl').innerHTML=tl;
+  document.getElementById('cancbtn').style.display=(r.st==='manager_pending'||r.st==='hr_pending')?'flex':'none';
+  // ملء بيانات الطباعة
+  fillPA(r,emp);
+  eGo('det');
+}
+function cancelR(){var r=reqs.find(function(x){return x.id===orid});if(r){r.st='cancelled';sv2();rEHome();eGo('home');toast('تم إلغاء الطلب')}}
+function rECal(){document.getElementById('ecal').innerHTML=bldCal(ceid);var h='';if(!hols.length){h='<div style="padding:16px;text-align:center;color:var(--g4);font-size:12px">لا توجد إجازات رسمية</div>'}else hols.forEach(function(hh){h+='<div class="rrow"><div class="rrt">'+hh.nm+'</div><div class="rrs">'+fmt(hh.s)+(hh.e&&hh.e!==hh.s?' — '+fmt(hh.e):'')+'</div></div>'});document.getElementById('ehol').innerHTML=h}
+function rNotif(){var mine=reqs.filter(function(r){return r.eid===ceid&&r.st!=='manager_pending'}).slice().reverse();var h='';if(!mine.length){h='<div style="padding:24px;text-align:center;color:var(--g4);font-size:13px">لا توجد إشعارات</div>'}else mine.forEach(function(r){var cl=r.st==='hr_approved'?'ok':r.st==='rejected'?'er':'wa';var msg={hr_approved:'✓ تم اعتماد إجازتك نهائياً',hr_pending:'وافق المدير — بانتظار موارد البشرية',rejected:'تم رفض الطلب',cancelled:'تم إلغاء الطلب'}[r.st]||r.st;h+='<div class="noi '+(r.notified?'':'unrd')+'" onclick="mkRd('+r.id+')">'+'<div class="noic" style="background:var(--'+cl+'l);color:var(--'+cl+')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>'+'<div class="notx"><div class="nott">إجازة '+r.type+'</div><div class="nob">'+msg+'</div><div class="notime">'+fmt(r.sub)+'</div></div></div>'});document.getElementById('enotif').innerHTML=h;upND()}
+function mkRd(id){var r=reqs.find(function(x){return x.id===id});if(r){r.notified=true;sv2()}upND()}
+function upND(){var n=reqs.filter(function(r){return r.eid===ceid&&r.st!=='manager_pending'&&!r.notified}).length;document.getElementById('nc').style.display=n?'flex':'none';document.getElementById('nc').textContent=n;document.getElementById('ndot').style.display=n?'block':'none'}
+
+/* MANAGER */
+function rMHome(){var pend=reqs.filter(function(r){return r.st==='manager_pending'});var tdy=emps.filter(function(e){return onLv(e)}).length;var appr=reqs.filter(function(r){return r.st==='hr_approved'||r.st==='hr_pending'}).length;document.getElementById('mc').textContent=pend.length;document.getElementById('mt').innerHTML=tdy+'<span class="scu"> موظف</span>';document.getElementById('mm').textContent=appr;document.getElementById('mf').innerHTML=emps.length+'<span class="scu"> موظف</span>';var b=document.getElementById('mbdg');b.style.display=pend.length?'flex':'none';b.textContent=pend.length;var h='';if(!pend.length){h='<div style="padding:28px;text-align:center;font-size:32px">🎉</div><div style="text-align:center;font-size:13px;color:var(--g4);padding-bottom:16px">لا توجد طلبات معلقة</div>'}else pend.forEach(function(r){var emp=emps.find(function(e){return e.id===r.eid})||{name:'—',dept:'—'};h+='<div class="rrow" onclick="oMR('+r.id+')">'+'<div class="rrh"><span class="rrt">'+emp.name+'</span><span class="bdg bp">جديد</span></div>'+'<div class="rrs">'+r.type+' • '+r.days+' أيام • '+fmt(r.s)+' — '+fmt(r.e)+'</div>'+'<div class="arow" onclick="event.stopPropagation()">'+'<button class="btn btn-ok bsm" onclick="qM(event,'+r.id+',1)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>موافقة</button>'+'<button class="btn btn-ero bsm" onclick="qM(event,'+r.id+',0)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>رفض</button>'+'</div></div>'});document.getElementById('mlist').innerHTML=h}
+function qM(e,id,ok){e.stopPropagation();var r=reqs.find(function(x){return x.id===id});if(!r)return;r.st=ok?'hr_pending':'rejected';r.mgr_date=td();sv2();toast(ok?'✓ الطلب انتقل لموارد البشرية فوراً 🔔':'تم الرفض')}
+function oMR(id){var r=reqs.find(function(x){return x.id===id});if(!r)return;orid=id;var emp=emps.find(function(e){return e.id===r.eid})||{name:'—',dept:'—',no:'—',title:'—',ann:0,med:0,color:'#999'};document.getElementById('md-av').textContent=ini(emp.name);document.getElementById('md-av').style.background=emp.color||'#999';document.getElementById('md-nm').textContent=emp.name;document.getElementById('md-sb').textContent=emp.title+' • رقم: '+emp.no;document.getElementById('md-tp').textContent=r.type;document.getElementById('md-dt').textContent=fmt(r.s)+' — '+fmt(r.e);document.getElementById('md-dy').textContent=r.days+' أيام';document.getElementById('md-dd').textContent=r.ded?'نعم، من رصيد '+r.type:'لا تُخصم';document.getElementById('md-rs').textContent=r.rsn;var bal=r.type==='اعتيادية'?emp.ann:emp.med;var bb=document.getElementById('md-bal');if(!r.ded){bb.className='ibox iok';bb.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--ok)">✅ هذا النوع لا يُخصم من أي رصيد</div>'}else if(r.days>bal){bb.className='ibox ier';bb.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--er)">⚠️ الرصيد غير كافٍ (متبقٍ '+bal+' يوم)</div>'}else{bb.className='ibox iok';bb.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--ok)">✓ الرصيد كافٍ — متبقٍ '+bal+' يوم</div>'}var con=document.getElementById('md-con');var hc=reqs.some(function(x){return x.id!==id&&x.eid!==r.eid&&x.st==='hr_approved'&&x.s<=r.e&&x.e>=r.s});con.style.display=hc?'block':'none';if(hc)con.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--wa)">⚠️ موظف آخر في إجازة بنفس الفترة</div>';document.getElementById('mnote').value='';mGo('det')}
+function mAct(a){var r=reqs.find(function(x){return x.id===orid});if(!r)return;var mnote=document.getElementById('mnote').value.trim();if(a==='approve'){r.st='hr_pending';r.mgr_note=mnote;r.mgr_date=td();toast('✓ الطلب عند موارد البشرية فوراً 🔔')}else if(a==='reject'){r.st='rejected';r.mgr_note=mnote;r.mgr_date=td();toast('تم الرفض')}else{r.st='manager_pending';toast('تم الإعادة للموظف')}sv2();mGo('home')}
+function rMTeam(){var h='';if(!emps.length){h='<div style="padding:24px;text-align:center;color:var(--g4)">لا يوجد موظفون</div>'}else emps.forEach(function(e){var lv=onLv(e);h+='<div class="tm"><div class="tav" style="background:'+(e.color||'#999')+'">'+ini(e.name)+'</div>'+'<div class="tin"><div class="tn">'+e.name+'</div><div class="tr2">'+e.title+' • اعتيادي: '+e.ann+' | مرضي: '+e.med+'</div></div>'+'<span class="ts '+(lv?'wa':'ok')+'">'+(lv?'✈ إجازة':'✓ حاضر')+'</span></div>'});document.getElementById('mteam').innerHTML=h}
+function rMCal(){document.getElementById('mcal').innerHTML=bldCal(null);var h='';if(!hols.length){h='<div style="padding:12px;text-align:center;color:var(--g4);font-size:12px">لا توجد إجازات رسمية</div>'}else hols.forEach(function(hh){h+='<div class="rrow"><div class="rrt">'+hh.nm+'</div><div class="rrs">'+fmt(hh.s)+(hh.e&&hh.e!==hh.s?' — '+fmt(hh.e):'')+'</div></div>'});document.getElementById('mhol').innerHTML=h}
+
+/* HR */
+function rHList(){var ap=reqs.filter(function(r){return r.st==='hr_approved'}).length;var rj=reqs.filter(function(r){return r.st==='rejected'}).length;var pn=reqs.filter(function(r){return r.st==='hr_pending'}).length;document.getElementById('hpn').textContent=pn;document.getElementById('han').textContent=ap;document.getElementById('hrn').textContent=rj;var fl=hf==='all'?reqs.slice().reverse():reqs.filter(function(r){return r.st===hf}).slice().reverse();var h='';if(!fl.length){h='<div style="padding:24px;text-align:center;color:var(--g4);font-size:13px">لا توجد طلبات</div>'}else fl.forEach(function(r){var emp=emps.find(function(e){return e.id===r.eid})||{name:'—',dept:'—'};h+='<div class="rrow" onclick="oHR('+r.id+')">'+'<div class="rrh"><span class="rrt">'+emp.name+'</span><span class="bdg '+sCls(r.st)+'">'+sLbl(r.st)+'</span></div>'+'<div class="rrs">'+r.type+' • '+r.days+' أيام • '+emp.dept+'</div>'+'<div class="rrd">'+fmt(r.s)+' — '+fmt(r.e)+'</div></div>'});document.getElementById('hlist').innerHTML=h}
+function upHB(){var n=reqs.filter(function(r){return r.st==='hr_pending'}).length;var b=document.getElementById('hbdg');b.style.display=n?'flex':'none';b.textContent=n}
+function oHR(id){var r=reqs.find(function(x){return x.id===id});if(!r)return;orid=id;var emp=emps.find(function(e){return e.id===r.eid})||{name:'—',dept:'—',no:'—',title:'—',ann:0,med:0,color:'#999'};document.getElementById('hd-av').textContent=ini(emp.name);document.getElementById('hd-av').style.background=emp.color||'#999';document.getElementById('hd-nm').textContent=emp.name;document.getElementById('hd-sb').textContent=emp.dept+' • رقم: '+emp.no;document.getElementById('hd-tp').textContent=r.type;document.getElementById('hd-dt').textContent=fmt(r.s)+' — '+fmt(r.e);document.getElementById('hd-dy').textContent=r.days+' أيام';document.getElementById('hd-dd').textContent=r.ded?'نعم، من رصيد '+r.type:'لا تُخصم';if(r.ded){var bal=r.type==='اعتيادية'?emp.ann:emp.med;document.getElementById('hd-af').textContent=Math.max(0,bal-r.days)+' يوم ✓'}else{document.getElementById('hd-af').textContent='لا خصم'}document.getElementById('hd-tl').innerHTML=tli('ok',ini(emp.name),'قدّم الطلب',fmt(r.sub))+tli('ok','م.م','وافق المدير'+(r.mgr_note?' — '+r.mgr_note:''),fmt(r.mgr_date||'—'));fillPA(r,emp);document.getElementById('hnote').value=r.hr_note||'';hGo('det')}
+function hAct(a){var r=reqs.find(function(x){return x.id===orid});if(!r)return;var hnote=document.getElementById('hnote').value.trim();if(a==='approve'){r.st='hr_approved';r.hr_note=hnote;r.hr_date=td();r.hr_approved_by='موارد البشرية';if(r.ded){var emp=emps.find(function(e){return e.id===r.eid});if(emp){var f=r.type==='اعتيادية'?'ann':'med';emp[f]=Math.max(0,emp[f]-r.days);emp.used=(emp.used||0)+r.days}}toast('✓ اعتماد نهائي! '+(r.ded?'خُصم الرصيد على جميع الأجهزة 🔄':'لا يوجد خصم'))}else{r.st='rejected';r.hr_note=hnote;r.hr_date=td();toast('تم الرفض')}sv2();hGo('home')}
+function bulkOk(){var pn=reqs.filter(function(r){return r.st==='hr_pending'});if(!pn.length){toast('لا توجد طلبات معلقة');return}pn.forEach(function(r){r.st='hr_approved';if(r.ded){var emp=emps.find(function(e){return e.id===r.eid});if(emp){var f=r.type==='اعتيادية'?'ann':'med';emp[f]=Math.max(0,emp[f]-r.days);emp.used=(emp.used||0)+r.days}}});sv2();toast('✓ تم اعتماد '+pn.length+' طلبات — تُزامن الآن 🔄')}
+function rHRep(){var t=td();var lv=emps.filter(function(e){return onLv(e)});var h='';if(!lv.length){h='<div style="padding:16px;text-align:center;color:var(--g4);font-size:13px">لا أحد في إجازة اليوم ✓</div>'}else lv.forEach(function(emp){var r=reqs.find(function(x){return x.eid===emp.id&&x.st==='hr_approved'&&x.s<=t&&x.e>=t});h+='<div class="tm"><div class="tav" style="background:'+(emp.color||'#999')+'">'+ini(emp.name)+'</div>'+'<div class="tin"><div class="tn">'+emp.name+'</div><div class="tr2">'+emp.dept+' • '+(r?r.type:'إجازة')+' حتى '+fmt(r?r.e:t)+'</div></div><span class="ts wa">✈</span></div>'});document.getElementById('hrep-today').innerHTML=h;var tot=reqs.length,ap=reqs.filter(function(r){return r.st==='hr_approved'}).length,rj=reqs.filter(function(r){return r.st==='rejected'}).length,dy=reqs.filter(function(r){return r.st==='hr_approved'}).reduce(function(s,r){return s+r.days},0);document.getElementById('rt').textContent=tot;document.getElementById('ra').textContent=ap;document.getElementById('rr').textContent=rj;document.getElementById('rd').textContent=dy+' يوم';var types=['اعتيادية','مرضية','بدون أجر','بدل يوم آخر'],mx=0;var cnts=types.map(function(tp){var c=reqs.filter(function(r){return r.type===tp&&r.st==='hr_approved'}).length;if(c>mx)mx=c;return c});var ch='<div class="chbar">';types.forEach(function(tp,i){var hh=mx>0?Math.round(cnts[i]/mx*72):4;ch+='<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div class="chb" style="width:100%;height:'+Math.max(hh,4)+'px" onclick="toast(\''+tp+': '+cnts[i]+' طلب\')"></div><div class="chbl">'+tp.substring(0,5)+'</div></div>'});ch+='</div><div style="font-size:10px;color:var(--g4);text-align:center">اضغط للتفاصيل</div>';document.getElementById('rchart').innerHTML=ch;rHols()}
+function rHols(){var h='';if(!hols.length){h='<div style="padding:16px;text-align:center;color:var(--g4);font-size:12px">لا توجد إجازات رسمية</div>'}else hols.forEach(function(hh,i){h+='<div class="rrow" style="display:flex;align-items:center;justify-content:space-between">'+'<div><div class="rrt">'+hh.nm+'</div><div class="rrs">'+fmt(hh.s)+(hh.e&&hh.e!==hh.s?' — '+fmt(hh.e):'')+'</div></div>'+'<button onclick="dHol('+i+')" style="background:none;border:none;color:var(--er);cursor:pointer;font-size:20px;padding:4px">×</button></div>'});var el=document.getElementById('hollist');if(el)el.innerHTML=h;var el2=document.getElementById('hrep-hol');if(el2)el2.innerHTML=h||'<div style="padding:12px;text-align:center;color:var(--g4);font-size:12px">لا توجد</div>'}
+function addHol(){document.getElementById('hname').value='';document.getElementById('hstart').value=td();document.getElementById('hend').value=td();om('mod-hol')}
+function savHol(){var n=document.getElementById('hname').value.trim(),s=document.getElementById('hstart').value,e=document.getElementById('hend').value;if(!n||!s){toast('⚠️ اسم الإجازة والتاريخ مطلوبان');return}hols.push({nm:n,s:s,e:e||s});sv2();cm('mod-hol');rHols();toast('✓ تم إضافة الإجازة — ستظهر على جميع الأجهزة 🔄')}
+function dHol(i){hols.splice(i,1);sv2();rHols();toast('تم حذف الإجازة الرسمية')}
+
+/* GM */
+function rGStats(){var lv=emps.filter(function(e){return onLv(e)}).length;var ap=reqs.filter(function(r){return r.st==='hr_approved'}).length;var tot=reqs.length;document.getElementById('gmt').textContent=emps.length;document.getElementById('gml').innerHTML=lv+'<span class="scu"> موظف</span>';document.getElementById('gmm').textContent=tot;document.getElementById('gmr').innerHTML=(tot>0?Math.round(ap/tot*100):0)+'<span class="scu">%</span>'}
+function rGEmps(f){var lst=emps;if(f&&f.trim()){var q=f.trim();lst=emps.filter(function(e){return e.name.includes(q)||e.dept.includes(q)||(e.no+'').includes(q)})}var h='';if(!emps.length){h='<div style="padding:32px 20px;text-align:center"><div style="font-size:40px;margin-bottom:10px">👥</div><div style="font-size:14px;font-weight:700;color:var(--g7);margin-bottom:6px">لا يوجد موظفون بعد</div><div style="font-size:12px;color:var(--g4)">اضغط "إضافة موظف" لإضافة أول موظف</div></div>'}else if(!lst.length){h='<div style="padding:16px;text-align:center;color:var(--g4);font-size:13px">لا توجد نتائج مطابقة</div>'}else{lst.forEach(function(e){var lv=onLv(e);h+='<div class="etbl-row" onclick="oProf('+e.id+')">'+'<div class="tav" style="background:'+(e.color||'#999')+';width:36px;height:36px;font-size:11px;flex-shrink:0">'+ini(e.name)+'</div>'+'<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;color:var(--g9)">'+e.name+'</div>'+'<div style="font-size:10px;color:var(--g4)">'+e.title+' • '+e.dept+'</div>'+'<div style="font-size:10px;color:var(--g5);margin-top:2px">اعتيادي: <b>'+e.ann+'</b> | مرضي: <b>'+e.med+'</b> | مستخدم: <b>'+(e.used||0)+'</b></div></div>'+'<div style="font-size:18px;color:'+(lv?'var(--wa)':'var(--ok)')+';">'+(lv?'✈':'✓')+'</div></div>'})}document.getElementById('gelist').innerHTML=h;rGStats()}
+function filtE(){rGEmps(document.getElementById('esrch').value)}
+function oProf(id){seid=id;var e=emps.find(function(x){return x.id===id});if(!e)return;document.getElementById('prav').textContent=ini(e.name);document.getElementById('prav').style.background=e.color||'#999';document.getElementById('prnm').textContent=e.name;document.getElementById('prsb').textContent=(e.title||'موظف')+' • رقم '+e.no;document.getElementById('prdp').textContent=e.dept;document.getElementById('pran').textContent=e.ann+' يوم متبقٍ';document.getElementById('prmd').textContent=e.med+' يوم متبقٍ';document.getElementById('prus').textContent=(e.used||0)+' يوم';document.getElementById('prps').textContent=e.ps||'—';om('mod-prof')}
+function addEmp(){document.getElementById('emtit').textContent='إضافة موظف جديد';document.getElementById('etxt').textContent='حفظ الموظف';document.getElementById('eid').value='';document.getElementById('fn').value='';document.getElementById('fno').value='';document.getElementById('ftit').value='';document.getElementById('fps').value='';document.getElementById('fdept').value='المبيعات';document.getElementById('cdw').style.display='none';document.getElementById('fan').value='30';document.getElementById('fmd').value='30';om('mod-emp')}
+function editEmp(){cm('mod-prof');var e=emps.find(function(x){return x.id===seid});if(!e)return;document.getElementById('emtit').textContent='تعديل بيانات الموظف';document.getElementById('etxt').textContent='حفظ التعديلات';document.getElementById('eid').value=e.id;document.getElementById('fn').value=e.name;document.getElementById('fno').value=e.no;document.getElementById('ftit').value=e.title||'';document.getElementById('fps').value=e.ps||'';setDept(e.dept||'المبيعات');document.getElementById('fan').value=e.ann;document.getElementById('fmd').value=e.med;om('mod-emp')}
+function saveEmp(){var nm=document.getElementById('fn').value.trim(),no=document.getElementById('fno').value.trim(),ps=String(document.getElementById('fps').value||'').trim(),tit=document.getElementById('ftit').value.trim()||'موظف',dp=getDept(),an=parseInt(document.getElementById('fan').value)||30,md=parseInt(document.getElementById('fmd').value)||30;if(!nm){toast('⚠️ الاسم مطلوب');return}if(!no){toast('⚠️ رقم الموظف مطلوب');return}if(!ps){toast('⚠️ كلمة المرور مطلوبة');return}var eid=document.getElementById('eid').value;if(eid){var e=emps.find(function(x){return x.id==eid});if(e){e.name=nm;e.no=no;e.title=tit;e.dept=dp;e.ps=ps;e.ann=an;e.med=md}toast('✓ تم التعديل — يُزامن الآن 🔄')}else{var clrs=CLRS();emps.push({id:neid++,no:no,name:nm,title:tit,dept:dp,ps:ps,ann:an,med:md,used:0,color:clrs[emps.length%clrs.length]});toast('✓ تم إضافة '+nm+' — يُزامن على جميع الأجهزة 🔄')}sv2();cm('mod-emp');ppick()}
+function editBal(){cm('mod-prof');var e=emps.find(function(x){return x.id===seid});if(!e)return;document.getElementById('baln').textContent=e.name;document.getElementById('ban').value=e.ann;document.getElementById('bmd').value=e.med;om('mod-bal')}
+function savBal(){var e=emps.find(function(x){return x.id===seid});if(!e)return;e.ann=parseInt(document.getElementById('ban').value)||0;e.med=parseInt(document.getElementById('bmd').value)||0;sv2();cm('mod-bal');toast('✓ تم تحديث رصيد '+e.name+' — يُزامن الآن 🔄')}
+function delEmp(){var e=emps.find(function(x){return x.id===seid});if(!e)return;if(!confirm('هل تريد حذف '+e.name+' نهائياً من جميع الأجهزة؟'))return;emps=emps.filter(function(x){return x.id!==seid});sv2();cm('mod-prof');ppick();toast('تم الحذف من جميع الأجهزة 🔄')}
+function rGRep(){var t=td();var lv=emps.filter(function(e){return onLv(e)});var h='';if(!lv.length){h='<div style="padding:16px;text-align:center;color:var(--g4);font-size:13px">لا أحد في إجازة اليوم ✓</div>'}else lv.forEach(function(emp){var r=reqs.find(function(x){return x.eid===emp.id&&x.st==='hr_approved'&&x.s<=t&&x.e>=t});h+='<div class="tm"><div class="tav" style="background:'+(emp.color||'#999')+'">'+ini(emp.name)+'</div><div class="tin"><div class="tn">'+emp.name+'</div><div class="tr2">'+emp.dept+' • '+(r?r.type:'إجازة')+' حتى '+fmt(r?r.e:t)+'</div></div><span class="ts wa">✈</span></div>'});document.getElementById('grep-today').innerHTML=h;var tot=reqs.length,ap=reqs.filter(function(r){return r.st==='hr_approved'}).length,dy=reqs.filter(function(r){return r.st==='hr_approved'}).reduce(function(s,r){return s+r.days},0);document.getElementById('gr-tot').textContent=emps.length;document.getElementById('gr-mon').textContent=tot;document.getElementById('gr-days').textContent=dy+' يوم';document.getElementById('gr-rate').textContent=(tot>0?Math.round(ap/tot*100):0)+'%'}
+
+/* CALENDAR */
+function bldCal(eid){var now=new Date(),y=now.getFullYear(),mo=now.getMonth();var first=new Date(y,mo,1).getDay(),days=new Date(y,mo+1,0).getDate();var mn=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;font-weight:800">'+mn[mo]+' '+y+'</span></div>';h+='<div class="cgrid"><div class="chd2">أح</div><div class="chd2">إث</div><div class="chd2">ث</div><div class="chd2">أر</div><div class="chd2">خ</div><div class="chd2">جم</div><div class="chd2">سب</div>';for(var i=0;i<first;i++)h+='<div class="cd ot"></div>';var t=td();for(var d=1;d<=days;d++){var ds=y+'-'+(String(mo+1).padStart(2,'0'))+'-'+(String(d).padStart(2,'0'));var wd=new Date(y,mo,d).getDay();var wk=wd===5||wd===6;var hl=hols.some(function(hh){return ds>=hh.s&&ds<=(hh.e||hh.s)});var lv=eid?reqs.some(function(r){return r.eid===eid&&r.st==='hr_approved'&&r.s<=ds&&r.e>=ds}):false;var ml=!eid&&reqs.some(function(r){return r.st==='hr_approved'&&r.s<=ds&&r.e>=ds});var cls='cd'+(ds===t?' today':hl?' hl':lv?' lv':wk?' wk':'')+(ml?' multi':'');h+='<div class="'+cls+'">'+d+'</div>'}h+='</div><div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px"><div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g6)"><div style="width:9px;height:9px;background:var(--okl);border-radius:2px"></div>'+(eid?'إجازتك':'إجازات')+'</div><div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g6)"><div style="width:9px;height:9px;background:var(--erl);border-radius:2px"></div>إجازة رسمية</div><div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--g6)"><div style="width:9px;height:9px;background:var(--pr);border-radius:2px"></div>اليوم</div></div>';return h}
+
+/* PRINT */
+function pRep(tp){var t=td();var lv=emps.filter(function(e){return onLv(e)});var rows='';lv.forEach(function(emp){var r=reqs.find(function(x){return x.eid===emp.id&&x.st==='hr_approved'&&x.s<=t&&x.e>=t});rows+='<tr><td>'+emp.name+'</td><td>'+emp.dept+'</td><td>'+(r?r.type:'—')+'</td><td>'+fmt(r?r.s:t)+'</td><td>'+fmt(r?r.e:t)+'</td><td>'+(r?r.days:0)+'</td></tr>'});var content='<html dir="rtl"><head><meta charset="UTF-8"><title>تقرير الإجازات</title><style>body{font-family:Arial,sans-serif;direction:rtl;padding:20px}.ph{text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #ccc}.ph h1{font-size:20px;font-weight:900}.ph p{font-size:12px;color:#666;margin-top:4px}.ptbl{width:100%;border-collapse:collapse;font-size:12px}.ptbl th{background:#1B4FD8;color:white;padding:8px;text-align:right}.ptbl td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:right}.pfooter{text-align:center;font-size:10px;color:#999;margin-top:16px;border-top:1px solid #eee;padding-top:8px}</style></head><body><div class="ph"><h1>تقرير الإجازات — اليوم</h1><p>'+fmt(t)+'</p></div><table class="ptbl"><tr><th>اسم الموظف</th><th>القسم</th><th>نوع الإجازة</th><th>من</th><th>إلى</th><th>أيام</th></tr>'+(rows||'<tr><td colspan="6" style="text-align:center;padding:20px;color:#999">لا أحد في إجازة اليوم</td></tr>')+'</table><div class="pfooter">تم تطويره بواسطة المبرمج / أحمد يحيى — جميع حقوق البرمجة والنشر محفوظة © 2025</div></body></html>';var w=window.open('','_blank');if(w){w.document.write(content);w.document.close();w.print()}}
+
+/* SETTINGS */
+function savSet(){toast('✓ تم حفظ الإعدادات')}
+function resetSys(){if(!confirm('⚠️ سيتم حذف جميع البيانات من جميع الأجهزة نهائياً. هل أنت متأكد؟'))return;emps=[];reqs=[];hols=[];neid=1;nrid=1;svLocal();if(db&&fbOK){db.ref('data').set(null);}ppick();toast('✓ تم تصفير النظام على جميع الأجهزة');}
+
+/* CLOCK & STARTUP */
+function tick(){var n=new Date();document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')}
+tick();setInterval(tick,30000);
+// تحميل البيانات المحلية فوراً عند الفتح
+ldLocal();ppick();
+// بدء Firebase للمزامنة
+initFB();
+// تحديث العرض إذا كان المستخدم مسجل دخول بالفعل (تحديث الصفحة)
+setTimeout(function(){
+  if(role==='emp')rEHome();
+  if(role==='mgr')rMHome();
+  if(role==='hr'){rHList();upHB();}
+  if(role==='gm'){rGEmps();rGStats();}
+},100);
+</script>
+</body>
+</html>

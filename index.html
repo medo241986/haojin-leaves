@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1a73e8">
+<title>إجازات هاوجين مصر</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a73e8; --primary-dark: #1557b0; --success: #34a853; --warning: #fbbc04; --danger: #ea4335;
+  --surface: #ffffff; --bg: #f8f9fa; --text: #202124; --text-secondary: #5f6368; --border: #e0e0e0;
+  --radius: 12px; --shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { direction: rtl; font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: var(--bg); color: var(--text); }
+.card { background: white; border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); margin-bottom: 12px; }
+.btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .2s; font-family: inherit; }
+.btn-primary { background: var(--primary); color: white; }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-gray { background: #e8eaed; color: var(--text); }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn:active { transform: scale(0.97); }
+.chip { display: inline-block; padding: 6px 16px; border-radius: 20px; border: 1.5px solid var(--border); cursor: pointer; font-size: 13px; margin: 4px; transition: all .2s; background: white; }
+.chip.sel { background: var(--primary); color: white; border-color: var(--primary); }
+.tabs { display: flex; border-bottom: 2px solid var(--border); background: white; position: sticky; top: 0; z-index: 10; overflow-x: auto; }
+.tab { flex: 1; padding: 12px 8px; text-align: center; cursor: pointer; font-size: 12px; color: var(--text-secondary); transition: all .2s; white-space: nowrap; }
+.tab.act { border-bottom: 2px solid var(--primary); color: var(--primary); font-weight: 700; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+input, select, textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: inherit; direction: rtl; background: white; color: var(--text); margin-bottom: 8px; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+input[type=checkbox] { width: auto; margin: 0 0 0 8px; }
+.page-header { background: var(--primary); color: white; padding: 14px 16px; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.page-header .ttl { flex: 1; text-align: center; }
+.page-header button { background: rgba(255,255,255,.2); color: white; border: none; border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+.stat-card { background: white; border-radius: var(--radius); padding: 14px; text-align: center; box-shadow: var(--shadow); }
+.stat-num { font-size: 28px; font-weight: 700; }
+.stat-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 12px; }
+.tab-content { padding-bottom: 40px; }
+.row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sm { font-size: 13px; color: var(--text-secondary); margin: 4px 0; }
+.acts { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: white; font-size: 13px; }
+th, td { padding: 8px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+th { background: #f1f3f4; }
+td input { margin: 0; padding: 4px 6px; width: 70px; }
+.avatar { width: 38px; height: 38px; border-radius: 50%; color: white; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-left: 8px; }
+h3 { margin: 6px 0 10px; font-size: 15px; }
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 12px; }
+.modal .box { background: white; border-radius: var(--radius); padding: 18px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+.empty { text-align: center; color: var(--text-secondary); padding: 24px; }
+.notif { border-right: 4px solid var(--primary); }
+.notif.read { border-right-color: var(--border); opacity: .75; }
+label { font-size: 12px; color: var(--text-secondary); display: block; margin-bottom: 2px; }
+.dot { background: var(--danger); color: white; border-radius: 10px; font-size: 10px; padding: 1px 6px; margin-right: 4px; }
+/* ===== تحسينات التصميم والخطوط ===== */
+:root { --primary:#0b5ed7; --primary-dark:#084298; --text:#1b1f24; --text-secondary:#4b5563; --border:#d9dee5; --bg:#f3f5f9; }
+body { font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif; font-size:15px; line-height:1.65; background:var(--bg); -webkit-font-smoothing:antialiased; }
+.page-header { background:linear-gradient(135deg,#1a73e8,#0a3d91); font-size:18px; font-weight:800; padding:14px 16px; box-shadow:0 2px 10px rgba(11,94,215,.3); }
+.page-header button { font-weight:700; font-size:13px; border-radius:10px; padding:7px 12px; }
+.card { border-radius:16px; padding:18px; box-shadow:0 2px 12px rgba(16,24,40,.07); border:1px solid #eceff4; }
+h3 { font-size:17px; font-weight:800; color:#111827; }
+.btn { font-weight:700; font-size:14px; border-radius:10px; padding:10px 20px; }
+.btn-sm { font-size:13px; padding:7px 14px; }
+.btn-primary { background:linear-gradient(135deg,#1a73e8,#0b5ed7); box-shadow:0 2px 6px rgba(11,94,215,.3); }
+.btn-success { background:linear-gradient(135deg,#34a853,#188038); }
+.btn-danger { background:linear-gradient(135deg,#ea4335,#c5221f); }
+.btn-gray { background:#e9edf3; color:#1f2937; }
+input, select, textarea { font-size:15px; padding:11px 14px; border-radius:10px; border:1.5px solid #cfd6e0; }
+label { font-size:13px; font-weight:700; color:#374151; margin:6px 0 4px; }
+.tab { font-size:14px; font-weight:700; padding:13px 10px; }
+.tab.act { border-bottom:3px solid var(--primary); }
+.stat-card { border-radius:16px; padding:16px 10px; border:2px solid transparent; transition:.18s; }
+.stat-card.click { cursor:pointer; }
+.stat-card.click:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(16,24,40,.12); }
+.stat-card.click:active { transform:scale(.97); }
+.stat-card.on { border-color:var(--primary); background:#eaf2ff; }
+.stat-num { font-size:32px; font-weight:800; line-height:1.2; }
+.stat-lbl { font-size:14px; font-weight:600; color:#374151; }
+.stat-grid.four { grid-template-columns:repeat(2,1fr); }
+@media (min-width:640px) { .stat-grid.four { grid-template-columns:repeat(4,1fr); } }
+.sm { font-size:14px; color:#4b5563; }
+.badge { font-size:12.5px; padding:3px 12px; font-weight:700; }
+table { font-size:14px; }
+th { background:#e8eefb; color:#1e3a8a; font-weight:800; }
+th, td { padding:10px; }
+.chip { font-size:14px; font-weight:600; padding:8px 18px; }
+.empty { font-size:15px; }
+.note { background:#fff8e1; border-radius:10px; padding:10px 12px; }
+/* ===== طلب الإجازة + الشكل العام ===== */
+.req-hero { background:linear-gradient(135deg,#0b5ed7,#0a3d91 62%,#138a4b); color:#fff; border-radius:20px; padding:22px 24px; margin-bottom:14px; box-shadow:0 10px 26px rgba(11,94,215,.28); position:relative; overflow:hidden; }
+.req-hero::after { content:'🏖️'; position:absolute; left:16px; top:4px; font-size:72px; opacity:.18; }
+.req-hero-t { font-size:22px; font-weight:800; }
+.req-hero-s { font-size:14px; opacity:.93; margin-top:4px; }
+.rq-card { padding:18px 18px 12px; }
+.rq-step { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:800; color:#0a3d91; margin-bottom:12px; }
+.rq-n { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#1a73e8,#0a3d91); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-size:14px; }
+.tiles { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media (min-width:560px) { .tiles { grid-template-columns:repeat(3,1fr); } }
+.chip.tile { display:flex; flex-direction:column; align-items:center; gap:2px; text-align:center; margin:0; padding:14px 8px; border-radius:14px; border:2px solid #e3e8f0; background:#fff; cursor:pointer; transition:.18s; }
+.chip.tile:hover { border-color:#9ec1f7; transform:translateY(-2px); box-shadow:0 6px 14px rgba(16,24,40,.08); }
+.chip.tile .ti { font-size:28px; line-height:1.2; }
+.chip.tile .tn { font-size:15px; font-weight:800; line-height:1.4; }
+.chip.tile .td { font-size:12px; color:#6b7280; font-weight:600; }
+.chip.tile.sel { background:linear-gradient(135deg,#1a73e8,#0a3d91); border-color:#0a3d91; color:#fff; box-shadow:0 8px 18px rgba(11,94,215,.35); }
+.chip.tile.sel .td { color:#dbeafe; }
+.tile-group { margin:18px 0 10px; font-weight:800; color:#0a3d91; font-size:15px; padding-right:10px; border-right:4px solid #16a34a; }
+.rq-dates { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.opt { font-weight:600; color:#6b7280; font-size:11.5px; }
+.rq-sum { margin:6px 0 10px; }
+.rq-sum-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; background:linear-gradient(135deg,#eff6ff,#e0edff); border:1.5px solid #bcd3fb; border-radius:14px; padding:12px; }
+.rq-sum-grid > div { text-align:center; }
+.rq-sum-grid span { display:block; font-size:12px; color:#475569; font-weight:700; }
+.rq-sum-grid b { font-size:16px; color:#0a3d91; }
+.rq-sum-grid.bad { background:#fef2f2; border-color:#fca5a5; }
+.rq-sum-grid.bad b { color:#b91c1c; }
+.rq-warn { color:#b91c1c; font-weight:700; font-size:13px; margin-top:6px; }
+.rq-submit { width:100%; padding:15px; font-size:17px; border-radius:14px; margin:4px 0 30px; }
+.pwrow { display:flex; gap:8px; align-items:flex-start; }
+.pwrow input { flex:1; }
+#pg-login .wrap { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:14px; padding-top:18px; }
+#pg-login .card { margin:0; border-top:4px solid #1a73e8; }
+#pg-login .card:nth-of-type(2) { border-top-color:#16a34a; }
+#pg-login .card:nth-of-type(3) { border-top-color:#f59e0b; }
+#pg-login .card:nth-of-type(4) { border-top-color:#7c3aed; }
+#pg-login .wrap > .sm { grid-column:1/-1; text-align:center; }
+.tab-content { animation:fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+.pwv { font-family:monospace; direction:ltr; display:inline-block; }
+.tbl-types td:first-child { white-space:normal; min-width:110px; }
+.tbl-types .btn-sm { padding:6px 9px; }
+.tbl-types select { padding:6px 8px; font-size:13px; width:auto; min-width:78px; }
+.tbl-types td input { width:58px; padding:6px 8px; font-size:13px; }
+.tbl-types th, .tbl-types td { padding:8px 6px; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="pg-login" style="display:block">
+  <div class="page-header"><span class="ttl">نظام إدارة الإجازات - هاوجين مصر</span></div>
+  <div class="wrap">
+    <div class="card">
+      <h3>👤 دخول الموظف</h3>
+      <select id="l-emp"></select>
+      <input type="password" id="l-emp-pw" placeholder="كلمة المرور">
+      <div class="sm" style="margin-bottom:10px">أول مرة؟ ادخل بكلمة المرور العامة (من الموارد البشرية) ثم اختر كلمة مرورك الخاصة.</div>
+      <button class="btn btn-primary" onclick="doLogin('emp')">دخول</button>
+    </div>
+    <div class="card">
+      <h3>👔 دخول المدير المباشر</h3>
+      <select id="l-mgr"></select>
+      <input type="password" id="l-mgr-pw" placeholder="كلمة مرور المدير">
+      <button class="btn btn-primary" onclick="doLogin('mgr')">دخول</button>
+    </div>
+    <div class="card">
+      <h3>🧑‍💼 دخول الموارد البشرية</h3>
+      <input type="password" id="l-hr-pw" placeholder="كلمة مرور HR">
+      <button class="btn btn-primary" onclick="doLogin('hr')">دخول</button>
+    </div>
+    <div class="card">
+      <h3>🏢 دخول المدير العام</h3>
+      <input type="password" id="l-gm-pw" placeholder="كلمة مرور المدير العام">
+      <button class="btn btn-primary" onclick="doLogin('gm')">دخول</button>
+    </div>
+    <div class="sm" style="text-align:center">الإصدار الأول: ابدأ بدخول المدير العام لإضافة الموظفين.</div>
+  </div>
+</div>
+
+<!-- EMPLOYEE PAGE -->
+<div id="pg-emp" style="display:none">
+  <div class="page-header"><button onclick="logout()">خروج</button><button onclick="empMgrLogin()">🔑 مدير</button><button onclick="showTopics()">🔔</button><span class="ttl">بوابة الموظف - <span id="emp-name-hdr"></span></span><button onclick="openMyPw()">⚙️</button></div>
+  <div class="tabs">
+    <div class="tab act" id="etb-home" onclick="eTab('home')">الرئيسية</div>
+    <div class="tab" id="etb-req" onclick="eTab('req')">طلب جديد</div>
+    <div class="tab" id="etb-report" onclick="eTab('report')">تقاريري</div>
+    <div class="tab" id="etb-notif" onclick="eTab('notif')">الإشعارات</div>
+  </div>
+  <div class="wrap">
+    <div id="et-home" class="tab-content"></div>
+    <div id="et-req" class="tab-content" style="display:none">
+      <div class="req-hero"><div class="req-hero-t">طلب إجازة جديد</div><div class="req-hero-s">اختر نوع الإجازة وحدّد الفترة، وسيصل طلبك لمديرك المباشر فوراً</div></div>
+      <div class="card rq-card">
+        <div class="rq-step"><span class="rq-n">1</span> نوع الإجازة</div>
+        <div id="type-chips"></div>
+      </div>
+      <div class="card rq-card">
+        <div class="rq-step"><span class="rq-n">2</span> الفترة</div>
+        <div class="rq-dates">
+          <div><label>من تاريخ</label><input type="date" id="rqs" onchange="onStartChange()"></div>
+          <div><label>إلى تاريخ <span class="opt">(اختياري في الإجازات الرسمية)</span></label><input type="date" id="rqe" onchange="onEndChange()"></div>
+        </div>
+        <div id="rq-sum" class="rq-sum"></div>
+        <div id="dedwrap" style="display:none">
+          <label>مبلغ الخصم (جنيه)</label>
+          <input type="number" id="dedamt" min="0" placeholder="0">
+        </div>
+      </div>
+      <div class="card rq-card">
+        <div class="rq-step"><span class="rq-n">3</span> التفاصيل</div>
+        <label>سبب الإجازة</label>
+        <textarea id="rqrsn" rows="3" placeholder="اكتب سبب الإجازة (اختياري)"></textarea>
+        <label>الموظف البديل أثناء الغياب</label>
+        <input type="text" id="rqact" placeholder="اسم الموظف البديل">
+      </div>
+      <button class="btn btn-primary rq-submit" onclick="subReq()">إرسال الطلب ✈</button>
+    </div>
+    <div id="et-report" class="tab-content" style="display:none">
+      <div id="e-rep-filter"></div>
+      <div id="e-rep-list"></div>
+    </div>
+    <div id="et-notif" class="tab-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- MANAGER PAGE -->
+<div id="pg-mgr" style="display:none">
+  <div class="page-header"><button onclick="logout()">خروج</button><button id="mgr-back" style="display:none" onclick="backToEmp()">↩ صفحتي</button><button onclick="showTopics()">🔔</button><span class="ttl">بوابة المدير - <span id="mgr-name-hdr"></span></span><button onclick="openMyPw()">⚙️</button></div>
+  <div class="tabs">
+    <div class="tab act" id="mtb-home" onclick="mTab('home')">الرئيسية</div>
+    <div class="tab" id="mtb-detail" onclick="mTab('detail')">تفاصيل</div>
+    <div class="tab" id="mtb-team" onclick="mTab('team')">فريقي</div>
+        <div class="tab" id="mtb-report" onclick="mTab('report')">التقارير</div>
+    <div class="tab" id="mtb-notif" onclick="mTab('notif')">الإشعارات</div>
+  </div>
+  <div class="wrap">
+    <div id="mt-home" class="tab-content"></div>
+    <div id="mt-detail" class="tab-content" style="display:none"></div>
+    <div id="mt-team" class="tab-content" style="display:none"></div>
+    <div id="mt-report" class="tab-content" style="display:none">
+      <div id="m-rep-filter"></div>
+      <div id="m-rep-list"></div>
+    </div>
+    <div id="mt-notif" class="tab-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- HR PAGE -->
+<div id="pg-hr" style="display:none">
+  <div class="page-header"><button onclick="logout()">خروج</button><span class="ttl">بوابة الموارد البشرية</span><button onclick="hrGMLogin()">🔑 GM</button><button onclick="showTopics()">🔔</button><button onclick="openSettings()">⚙️</button></div>
+  <div class="tabs">
+    <div class="tab act" id="htb-home" onclick="hTab('home')">الطلبات</div>
+    <div class="tab" id="htb-emps" onclick="hTab('emps')">الموظفون</div>
+    <div class="tab" id="htb-report" onclick="hTab('report')">التقارير</div>
+    <div class="tab" id="htb-all" onclick="hTab('all')">الكل</div>
+    <div class="tab" id="htb-types" onclick="hTab('types')">أنواع الإجازات</div>
+    <div class="tab" id="gm-tab-btn" style="display:none" onclick="hTab('gm')">GM</div>
+  </div>
+  <div class="wrap">
+    <div id="ht-home" class="tab-content"></div>
+    <div id="ht-emps" class="tab-content" style="display:none"></div>
+    <div id="ht-report" class="tab-content" style="display:none"></div>
+    <div id="ht-all" class="tab-content" style="display:none"></div>
+    <div id="ht-types" class="tab-content" style="display:none"></div>
+    <div id="ht-gm" class="tab-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- GM PAGE -->
+<div id="pg-gm" style="display:none">
+  <div class="page-header"><button onclick="logout()">خروج</button><span class="ttl">بوابة المدير العام</span><button onclick="openSettings()">⚙️</button></div>
+  <div class="tabs">
+    <div class="tab act" id="gtb-emps" onclick="gTab('emps')">الموظفون</div>
+    <div class="tab" id="gtb-report" onclick="gTab('report')">التقارير</div>
+    <div class="tab" id="gtb-settings" onclick="gTab('settings')">الإعدادات</div>
+  </div>
+  <div class="wrap">
+    <div id="gt-emps" class="tab-content"></div>
+    <div id="gt-report" class="tab-content" style="display:none"></div>
+    <div id="gt-settings" class="tab-content" style="display:none"></div>
+  </div>
+</div>
+
+<!-- EMPLOYEE EDIT MODAL -->
+<div id="emp-modal" class="modal">
+  <div class="box">
+    <h3 id="em-title">موظف</h3>
+    <input type="hidden" id="em-id">
+    <input id="em-no" placeholder="رقم الموظف">
+    <input id="em-name" placeholder="الاسم الكامل">
+    <input id="em-title2" placeholder="المسمى الوظيفي">
+    <select id="em-dept"></select>
+    <input id="em-ps" placeholder="كلمة مرور الموظف (اتركها فارغة = الكلمة العامة)">
+    <input id="em-mps" placeholder="كلمة مرور المدير (إن كان مديراً)">
+    <label>الرصيد السنوي</label><input type="number" id="em-ann" value="21">
+    <label>الرصيد الطبي</label><input type="number" id="em-med" value="15">
+    <label>المستخدم من السنوي</label><input type="number" id="em-used" value="0">
+    <label>المدير المباشر</label>
+    <select id="em-mgr"></select>
+    <label>لون الصورة</label>
+    <input type="color" id="em-color" value="#1a73e8">
+    <div class="acts">
+      <button class="btn btn-primary" onclick="saveEmp()">حفظ</button>
+      <button class="btn btn-gray" onclick="closeModal('emp-modal')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- MY PASSWORD MODAL -->
+<div id="mypw-modal" class="modal"><div class="box">
+  <h3>🔐 كلمة المرور الخاصة بي</h3>
+  <div class="note sm" id="mp-msg" style="margin-bottom:10px"></div>
+  <input type="hidden" id="mp-id">
+  <label>كلمة مرور الدخول</label>
+  <div class="pwrow"><input type="password" id="mp-ps" placeholder="كلمة المرور"><button class="btn btn-gray btn-sm" type="button" onclick="togglePw('mp-ps')">👁 إظهار</button></div>
+  <label>تأكيد كلمة المرور</label>
+  <div class="pwrow"><input type="password" id="mp-ps2" placeholder="أعد كتابتها"><button class="btn btn-gray btn-sm" type="button" onclick="togglePw('mp-ps2')">👁</button></div>
+  <div id="mp-mwrap" style="display:none"><label>كلمة مرور المدير (لفتح صفحة المدير)</label>
+    <div class="pwrow"><input type="password" id="mp-mps" placeholder="كلمة مرور المدير"><button class="btn btn-gray btn-sm" type="button" onclick="togglePw('mp-mps')">👁</button></div></div>
+  <div class="sm">كلمة المرور تظهر لك وللموارد البشرية والمدير العام فقط.</div>
+  <div class="acts"><button class="btn btn-primary" onclick="saveMyPw()">حفظ</button><button class="btn btn-gray" onclick="closeModal('mypw-modal')">إلغاء / لاحقاً</button></div>
+</div></div>
+
+<!-- TOPICS MODAL -->
+<div id="topic-modal" class="modal"><div class="box"><h3>🔔 الإشعارات الخارجية</h3><div id="topic-body"></div><div class="acts"><button class="btn btn-gray" onclick="closeModal('topic-modal')">إغلاق</button></div></div></div>
+
+<!-- SETTINGS MODAL (shared) -->
+<div id="settings-modal" class="modal">
+  <div class="box">
+    <h3>⚙️ الإعدادات</h3>
+    <label>كلمة مرور الإعدادات (مطلوبة للتغيير)</label>
+    <input type="password" id="st-setpw" placeholder="كلمة مرور الإعدادات">
+    <label>كلمة المرور العامة للموظفين (للدخول لأول مرة)</label><input id="st-emp">
+    <label>كلمة مرور المديرين العامة</label><input id="st-mgr">
+    <label>كلمة مرور HR</label><input id="st-hr">
+    <label>كلمة مرور المدير العام</label><input id="st-gm">
+    <label>كلمة مرور الإعدادات الجديدة (اختياري)</label><input id="st-newset">
+    <div class="acts">
+      <button class="btn btn-primary" onclick="savePasswords()">حفظ كلمات المرور</button>
+    </div>
+    <hr style="margin:14px 0;border:none;border-top:1px solid var(--border)">
+    <div class="acts">
+      <button class="btn btn-success" onclick="exportData()">تصدير البيانات</button>
+      <button class="btn btn-gray" onclick="G('st-file').click()">استيراد البيانات</button>
+      <input type="file" id="st-file" accept=".json" style="display:none" onchange="importData(this)">
+    </div>
+    <div class="acts"><button class="btn btn-gray" onclick="closeModal('settings-modal')">إغلاق</button></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// ========== 1. Firebase init ==========
+try {
+  firebase.initializeApp({ databaseURL: "https://haojin-leaves-default-rtdb.firebaseio.com" });
+  window.fbReady = true;
+} catch (e) {
+  window.fbReady = false;
+}
+
+// ========== 2. Global variables ==========
+var _d = {
+  emps: [], reqs: [],
+  depts: ['الإنتاج','المبيعات','المالية','الموارد البشرية','التقنية','الجودة','المستودع'],
+  neid: 1, nrid: 1,
+  PW: { mgr: '5678', hr: 'hr99', gm: 'gm00' },
+  SET_PW: 'set2025',
+  ts: 0
+};
+var emps = _d.emps;
+var reqs = _d.reqs;
+var ceid = 0;
+var curRole = '';
+var hrGM = false;
+window._mgrEmpId = 0;
+window._curReq = 0;
+var eFilter = 'all', mFilter = 'all';
+var HOLS = [
+  {k:'h_xmas', l:'عيد الميلاد المجيد (7 يناير)', dd:1},
+  {k:'h_jan25', l:'عيد الشرطة وثورة 25 يناير', dd:1},
+  {k:'h_sinai', l:'عيد تحرير سيناء (25 أبريل)', dd:1},
+  {k:'h_labor', l:'عيد العمال (1 مايو)', dd:1},
+  {k:'h_sham', l:'شم النسيم', dd:1},
+  {k:'h_jun30', l:'ثورة 30 يونيو', dd:1},
+  {k:'h_hijri', l:'رأس السنة الهجرية', dd:1},
+  {k:'h_jul23', l:'ثورة 23 يوليو', dd:1},
+  {k:'h_mawlid', l:'المولد النبوي الشريف', dd:1},
+  {k:'h_oct6', l:'عيد القوات المسلحة (6 أكتوبر)', dd:1},
+  {k:'h_fitr', l:'عيد الفطر المبارك', dd:3},
+  {k:'h_adha', l:'وقفة عرفة وعيد الأضحى المبارك', dd:4}
+];
+var COLORS = ['#1a73e8','#34a853','#ea4335','#f9ab00','#9334e6','#00897b','#e8710a','#d01884'];
+
+// ========== 3. Helper functions ==========
+function G(id) { return document.getElementById(id); }
+function dbt(s, e) {
+  var d1 = new Date(s), d2 = new Date(e);
+  if (isNaN(d1) || isNaN(d2) || d2 < d1) return 0;
+  return Math.round((d2 - d1) / 86400000) + 1;
+}
+function typeLbl(t) { var x = (_d.types || []).find(function(y){ return y.k === t; }); return x ? x.l : t; }
+function stLbl(s) {
+  return { manager_pending:'بانتظار المدير', hr_pending:'بانتظار HR', hr_approved:'موافق عليها', rejected:'مرفوضة', cancelled:'ملغاة' }[s] || s;
+}
+function stColor(s) {
+  return { manager_pending:'#f9ab00', hr_pending:'#1a73e8', hr_approved:'#34a853', rejected:'#ea4335', cancelled:'#9e9e9e' }[s] || '#9e9e9e';
+}
+function fmtDate(d) {
+  if (!d) return '-';
+  return new Date(d).toLocaleDateString('ar-EG', {year:'numeric', month:'short', day:'numeric'});
+}
+function showPage(id) {
+  ['pg-login','pg-emp','pg-mgr','pg-hr','pg-gm'].forEach(function(p) {
+    var el = G(p);
+    if (el) el.style.display = (p === id) ? 'block' : 'none';
+  });
+  window.scrollTo(0, 0);
+}
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function eById(id) { return emps.find(function(x){ return x.id === id; }); }
+function closeModal(id) { G(id).style.display = 'none'; }
+function openModal(id) { G(id).style.display = 'flex'; }
+function toArr(x) {
+  if (!x) return [];
+  if (Array.isArray(x)) return x.filter(function(v){ return v != null; });
+  return Object.keys(x).map(function(k){ return x[k]; });
+}
+function norm() {
+  _d.emps = toArr(_d.emps); _d.reqs = toArr(_d.reqs);
+  _d.depts = toArr(_d.depts);
+  if (!_d.depts.length) _d.depts = ['الإنتاج','المبيعات','المالية','الموارد البشرية','التقنية','الجودة','المستودع'];
+  _d.PW = _d.PW || { mgr: '5678', hr: 'hr99', gm: 'gm00' };
+  _d.SET_PW = _d.SET_PW || 'set2025';
+  _d.PW.emp = _d.PW.emp || '1234';
+  var baseT = [{k:'annual',l:'سنوية',b:1,d:'annual'},{k:'medical',l:'طبية',b:1,d:'medical'},{k:'unpaid',l:'بدون راتب',b:1,d:''},{k:'emergency',l:'طارئة',b:1,d:''}];
+  _d.types = toArr(_d.types);
+  baseT.forEach(function(b, i) {
+    var f = _d.types.find(function(t){ return t.k === b.k; });
+    if (!f) _d.types.splice(i, 0, b); else if (f.d === undefined) f.d = b.d;
+  });
+  if (!_d.holSeeded) {
+    HOLS.forEach(function(hh) { if (!_d.types.some(function(t){ return t.k === hh.k; })) _d.types.push({k:hh.k, l:hh.l, b:0, d:'', dd:hh.dd, g:'official'}); });
+    _d.holSeeded = 1;
+  }
+  _d.types.forEach(function(t) { if (t.d === undefined) t.d = ''; if (t.dd === undefined) t.dd = 0; });
+  _d.ts = _d.ts || 0;
+  var me = 0, mr = 0;
+  _d.emps.forEach(function(x){ if (x.id > me) me = x.id; });
+  _d.reqs.forEach(function(x){ if (x.id > mr) mr = x.id; });
+  _d.neid = Math.max(_d.neid || 1, me + 1);
+  _d.nrid = Math.max(_d.nrid || 1, mr + 1);
+  emps = _d.emps; reqs = _d.reqs;
+}
+function initials(n) { return esc((n || '?').trim().charAt(0)); }
+function typeBalCard(label, val, color, click, on) {
+  return '<div class="stat-card' + (click ? ' click' : '') + (on ? ' on' : '') + '"' + (click ? ' onclick="' + click + '"' : '') + '><div class="stat-num" style="color:' + color + '">' + val + '</div><div class="stat-lbl">' + label + '</div></div>';
+}
+function setActiveTab(prefix, names, n) {
+  names.forEach(function(x) {
+    var t = G(prefix + 'tb-' + x); if (t) t.classList.toggle('act', x === n);
+    var c = G(prefix + 't-' + x); if (c) c.style.display = (x === n) ? 'block' : 'none';
+  });
+}
+function reqCard(r, actions, extra) {
+  var e = eById(r.eid) || {name:'—'};
+  return '<div class="card"><div class="row"><b>' + (extra || '') + esc(e.name) + '</b><span class="badge" style="background:' + stColor(r.st) + '22;color:' + stColor(r.st) + '">' + stLbl(r.st) + '</span></div>' +
+    '<div class="sm">' + typeLbl(r.type) + ' • ' + fmtDate(r.s) + ' ← ' + fmtDate(r.e) + ' • ' + r.days + ' يوم' + (r.ded ? ' • خصم ' + r.ded : '') + '</div>' +
+    (r.rsn ? '<div class="sm">السبب: ' + esc(r.rsn) + '</div>' : '') +
+    (r.acting ? '<div class="sm">البديل: ' + esc(r.acting) + '</div>' : '') +
+    (r.mnote ? '<div class="sm">ملاحظة: ' + esc(r.mnote) + '</div>' : '') +
+    (actions || '') + docBtns(r) + '</div>';
+}
+function filterBar(fnName, cur) {
+  var items = [['all','الكل'],['pending','قيد الانتظار'],['approved','موافق عليها'],['rejected','مرفوضة']];
+  return '<div style="margin-bottom:8px">' + items.map(function(i) {
+    return '<span class="chip' + (cur === i[0] ? ' sel' : '') + '" onclick="' + fnName + '(\'' + i[0] + '\')">' + i[1] + '</span>';
+  }).join('') + '</div>';
+}
+function matchFilter(r, f) {
+  if (f === 'all') return true;
+  if (f === 'pending') return r.st === 'manager_pending' || r.st === 'hr_pending';
+  if (f === 'approved') return r.st === 'hr_approved';
+  if (f === 'rejected') return r.st === 'rejected' || r.st === 'cancelled';
+  return true;
+}
+function reqTable(list) {
+  if (!list.length) return '<div class="empty">لا توجد طلبات</div>';
+  return '<div class="tbl-wrap"><table><tr><th>الموظف</th><th>النوع</th><th>من</th><th>إلى</th><th>الأيام</th><th>الحالة</th><th></th></tr>' +
+    list.map(function(r) {
+      var e = eById(r.eid) || {name:'—'};
+      return '<tr><td>' + esc(e.name) + '</td><td>' + typeLbl(r.type) + '</td><td>' + fmtDate(r.s) + '</td><td>' + fmtDate(r.e) + '</td><td>' + r.days + '</td><td><span class="badge" style="background:' + stColor(r.st) + '22;color:' + stColor(r.st) + '">' + stLbl(r.st) + '</span></td><td>' + actBtns(r) + '</td></tr>';
+    }).join('') + '</table></div>';
+}
+function myTeamIds() {
+  return emps.filter(function(x){ return x.mgrId === window._mgrEmpId; }).map(function(x){ return x.id; });
+}
+function deptOptions(sel) {
+  return _d.depts.map(function(d){ return '<option' + (d === sel ? ' selected' : '') + '>' + esc(d) + '</option>'; }).join('');
+}
+
+
+// ========== 4. إشعارات ntfy الخارجية ==========
+var NTFY_URL = 'https://ntfy.sh/';
+function rndTopic(p) {
+  var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a);
+  var s = ''; for (var i = 0; i < a.length; i++) s += (a[i] % 36).toString(36);
+  return 'haojin-' + p + '-' + s;
+}
+function ensureTopics() {
+  if (!emps.length) return false;
+  var ch = false;
+  emps.forEach(function(x) {
+    if (!x.tp) { x.tp = rndTopic('e'); ch = true; }
+    if (!x.mtp) { x.mtp = rndTopic('m'); ch = true; }
+  });
+  if (!_d.hrTopic) { _d.hrTopic = rndTopic('hr'); ch = true; }
+  if (ch) sv2();
+  return ch;
+}
+function ntfyQueue(msg) {
+  var q = []; try { q = JSON.parse(localStorage.getItem('ntfy_q') || '[]'); } catch (e) {}
+  q.push(msg); if (q.length > 30) q = q.slice(-30);
+  try { localStorage.setItem('ntfy_q', JSON.stringify(q)); } catch (e) {}
+}
+function ntfyPost(msg) {
+  try {
+    fetch(NTFY_URL, { method: 'POST', body: JSON.stringify(msg) })
+      .then(function(r) { if (!r.ok) throw new Error('bad'); })
+      .catch(function() { ntfyQueue(msg); });
+  } catch (e) { ntfyQueue(msg); }
+}
+function notify(topic, title, body) {
+  if (!topic) return;
+  var msg = { topic: topic, title: title, message: body, priority: 4, tags: ['bell'] };
+  if (/^https?:/.test(location.protocol)) msg.click = location.href.split('#')[0];
+  ntfyPost(msg);
+}
+function flushNtfy() {
+  var q = []; try { q = JSON.parse(localStorage.getItem('ntfy_q') || '[]'); } catch (e) {}
+  if (!q.length) return;
+  localStorage.setItem('ntfy_q', '[]');
+  q.forEach(ntfyPost);
+}
+window.addEventListener('online', flushNtfy);
+
+function topicCard(label, topic) {
+  var t = esc(topic);
+  return '<div class="card"><b>' + esc(label) + '</b><div class="sm" style="direction:ltr;text-align:left;word-break:break-all;font-family:monospace">' + t + '</div>' +
+    '<div class="acts"><a class="btn btn-primary btn-sm" style="text-decoration:none" href="ntfy://ntfy.sh/' + encodeURIComponent(topic) + '">فتح في ntfy</a>' +
+    '<button class="btn btn-gray btn-sm" data-t="' + t + '" onclick="copyTopic(this)">نسخ</button>' +
+    '<button class="btn btn-gray btn-sm" data-t="' + t + '" onclick="testTopic(this)">إشعار تجريبي</button></div></div>';
+}
+function copyTopic(b) {
+  var t = b.dataset.t;
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function(){ alert('تم النسخ'); }, function(){ prompt('انسخ الاسم', t); });
+  else prompt('انسخ الاسم', t);
+}
+function testTopic(b) { notify(b.dataset.t, 'إشعار تجريبي', 'هذا إشعار تجريبي من نظام الإجازات - هاوجين مصر'); alert('تم إرسال إشعار تجريبي، تأكد أنه وصل على الموبايل'); }
+
+function showTopics() {
+  ensureTopics();
+  var html = '<div class="note sm" style="margin-bottom:10px">١) نزّل تطبيق <b>ntfy</b> من المتجر. ٢) اضغط «فتح في ntfy» من الموبايل نفسه، أو اضغط ➕ داخل ntfy والصق الاسم. ٣) جرّب «إشعار تجريبي». على أندرويد: أوقف توفير البطارية لتطبيق ntfy.</div>';
+  if (curRole === 'hr') {
+    html += topicCard('إشعارات الموارد البشرية', _d.hrTopic);
+  } else {
+    var id = curRole === 'mgr' ? window._mgrEmpId : ceid;
+    var x = eById(id);
+    if (!x) return;
+    if (curRole === 'mgr' || isMgrId(id)) html += topicCard('إشعارات طلبات فريقي (كمدير)', x.mtp);
+    html += topicCard('إشعارات طلباتي الشخصية', x.tp);
+  }
+  G('topic-body').innerHTML = html;
+  openModal('topic-modal');
+}
+
+
+function pushQueue(key, msg) {
+  var arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  arr.unshift({msg: msg, ts: new Date().toISOString(), read: false});
+  if (arr.length > 50) arr = arr.slice(0, 50);
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+function queueMgrNotif(mgrId, msg) { pushQueue('notif_mgr_' + mgrId, msg); }
+function queueEmpNotif(empId, msg) { pushQueue('notif_emp_' + empId, msg); }
+
+function renderNotifs(key, boxId, tabId) {
+  var arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  var html = arr.length ? arr.map(function(n) {
+    return '<div class="card notif' + (n.read ? ' read' : '') + '"><div>' + esc(n.msg) + '</div><div class="sm">' + new Date(n.ts).toLocaleString('ar-EG') + '</div></div>';
+  }).join('') : '<div class="empty">لا توجد إشعارات</div>';
+  G(boxId).innerHTML = '<div class="acts" style="margin-bottom:8px"><button class="btn btn-gray btn-sm" onclick="clearNotifs(\'' + key + '\')">مسح الكل</button></div>' + html;
+  arr.forEach(function(n){ n.read = true; });
+  localStorage.setItem(key, JSON.stringify(arr));
+  updNotifBadge(key, tabId, true);
+}
+function clearNotifs(key) {
+  localStorage.setItem(key, '[]');
+  if (key.indexOf('notif_emp_') === 0) renderENotifs(); else renderMNotifs();
+}
+function updNotifBadge(key, tabId, zero) {
+  var arr = [];
+  try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch (e) {}
+  var c = zero ? 0 : arr.filter(function(n){ return !n.read; }).length;
+  var t = G(tabId); if (!t) return;
+  t.innerHTML = 'الإشعارات' + (c ? '<span class="dot">' + c + '</span>' : '');
+}
+
+// ========== 5. Save / load ==========
+function sv2() {
+  _d.ts = Date.now();
+  localStorage.setItem('hjv5', JSON.stringify(_d));
+  if (window.fbReady) {
+    try {
+      firebase.database().ref('hjv5').set(_d).catch(function(e) { console.log('Firebase write error', e); });
+    } catch (e) { console.log('Firebase write error', e); }
+  }
+}
+
+function snapshotStates() {
+  var m = {};
+  reqs.forEach(function(r){ m[r.id] = r.st; });
+  return m;
+}
+
+function onRemoteChange(old) {
+  // Notify the logged-in user about changes made on other devices
+  reqs.forEach(function(r) {
+    var was = old[r.id];
+    if (was === r.st) return;
+    var e = eById(r.eid); if (!e) return;
+    if (curRole === 'mgr' && r.st === 'manager_pending' && e.mgrId === window._mgrEmpId) {
+      var m1 = 'طلب إجازة جديد من ' + e.name + ' (' + r.days + ' يوم ' + typeLbl(r.type) + ')';
+      queueMgrNotif(window._mgrEmpId, m1);
+    } else if (curRole === 'hr' && r.st === 'hr_pending') {
+    } else if (curRole === 'emp' && r.eid === ceid && (r.st === 'hr_approved' || r.st === 'rejected')) {
+      var m2 = (r.st === 'hr_approved' ? 'تمت الموافقة على إجازتك من ' : 'تم رفض إجازتك من ') + r.s + ' إلى ' + r.e;
+      queueEmpNotif(ceid, m2);
+    }
+  });
+}
+
+function refreshView() {
+  fillLoginSelects();
+  if (curRole === 'emp') { rEHome(); renderTypeChips(); renderEReqs(); updNotifBadge('notif_emp_' + ceid, 'etb-notif'); }
+  else if (curRole === 'mgr') { rMHome(); renderMTeam(); renderMReports(); updNotifBadge('notif_mgr_' + window._mgrEmpId, 'mtb-notif'); }
+  else if (curRole === 'hr') { rHHome(); renderHEmps(); renderHReport(); renderHAll(); if (hrGM) renderGMEmps('ht-gm'); }
+  else if (curRole === 'gm') { renderGMEmps('gt-emps'); renderGReport(); }
+}
+
+function loadData() {
+  var local = localStorage.getItem('hjv5');
+  if (local) {
+    try { _d = JSON.parse(local); } catch (e) {}
+  }
+  norm();
+  if (window.fbReady) {
+    try {
+      firebase.database().ref('hjv5').on('value', function(snap) {
+        var fb = snap.val();
+        if (!fb) { if (_d.emps.length || _d.reqs.length) sv2(); return; }
+        if ((fb.ts || 0) > (_d.ts || 0)) {
+          var old = snapshotStates();
+          _d = fb; norm();
+          localStorage.setItem('hjv5', JSON.stringify(_d));
+          onRemoteChange(old);
+          refreshView();
+        } else if ((fb.ts || 0) < (_d.ts || 0)) {
+          // local is newer (e.g. edits made offline) - push it up
+          firebase.database().ref('hjv5').set(_d).catch(function(){});
+        }
+      }, function(err) { console.log('Firebase read error', err); });
+    } catch (e) { console.log('Firebase error', e); }
+  }
+}
+
+// ========== 6. Login ==========
+function fillLoginSelects() {
+  var es = G('l-emp'), ms = G('l-mgr');
+  var curE = es.value, curM = ms.value;
+  es.innerHTML = '<option value="">— اختر اسمك —</option>' + emps.map(function(x){ return '<option value="' + x.id + '">' + esc(x.name) + '</option>'; }).join('');
+  var mgrIds = {};
+  emps.forEach(function(x){ if (x.mgrId) mgrIds[x.mgrId] = true; });
+  var mgrs = emps.filter(function(x){ return x.mps || mgrIds[x.id]; });
+  ms.innerHTML = '<option value="">— اختر المدير —</option>' + mgrs.map(function(x){ return '<option value="' + x.id + '">' + esc(x.name) + '</option>'; }).join('');
+  es.value = curE; ms.value = curM;
+}
+
+function saveSess() { try { localStorage.setItem('hj_sess', JSON.stringify({ role: curRole, id: curRole === 'mgr' ? window._mgrEmpId : ceid, fromEmp: curRole === 'mgr' && !!ceid })); } catch (e) {} }
+function clearSess() { try { localStorage.removeItem('hj_sess'); } catch (e) {} }
+
+function enterEmp(id) {
+  var emp = eById(id); if (!emp) return false;
+  ceid = id; curRole = 'emp'; window._mgrEmpId = 0;
+  G('emp-name-hdr').textContent = emp.name;
+  showPage('pg-emp'); eTab('home'); saveSess(); ensureTopics();
+  return true;
+}
+function enterMgr(mid, fromEmp) {
+  var m = eById(mid); if (!m) return false;
+  window._mgrEmpId = mid; curRole = 'mgr';
+  ceid = fromEmp ? mid : 0;
+  G('mgr-name-hdr').textContent = m.name;
+  G('mgr-back').style.display = fromEmp ? 'inline-block' : 'none';
+  showPage('pg-mgr'); mTab('home'); saveSess(); ensureTopics();
+  return true;
+}
+function enterHr() {
+  curRole = 'hr'; hrGM = false; ceid = 0; window._mgrEmpId = 0;
+  G('gm-tab-btn').style.display = 'none';
+  showPage('pg-hr'); hTab('home'); saveSess(); ensureTopics();
+}
+
+function doLogin(role) {
+  if (role === 'emp') {
+    var id = parseInt(G('l-emp').value);
+    var emp = eById(id);
+    if (!emp) { alert('اختر اسمك من القائمة'); return; }
+    var epw = G('l-emp-pw').value;
+    var okPw = emp.psSet ? (emp.ps === epw) : ((emp.ps && emp.ps === epw) || epw === _d.PW.emp);
+    if (!okPw) { alert('كلمة المرور غير صحيحة'); return; }
+    G('l-emp-pw').value = '';
+    enterEmp(id);
+    if (!emp.psSet) setTimeout(function(){ openMyPw(true); }, 350);
+  } else if (role === 'mgr') {
+    var mid = parseInt(G('l-mgr').value);
+    var m = eById(mid);
+    if (!m) { alert('اختر اسم المدير'); return; }
+    var pw = G('l-mgr-pw').value;
+    if (!((m.mps && m.mps === pw) || pw === _d.PW.mgr)) { alert('كلمة المرور غير صحيحة'); return; }
+    G('l-mgr-pw').value = '';
+    enterMgr(mid, false);
+  } else if (role === 'hr') {
+    if (G('l-hr-pw').value !== _d.PW.hr) { alert('كلمة المرور غير صحيحة'); return; }
+    G('l-hr-pw').value = '';
+    enterHr();
+  } else if (role === 'gm') {
+    if (G('l-gm-pw').value !== _d.PW.gm) { alert('كلمة المرور غير صحيحة'); return; }
+    curRole = 'gm'; ceid = 0; window._mgrEmpId = 0;
+    G('l-gm-pw').value = '';
+    showPage('pg-gm'); gTab('emps');
+  }
+}
+
+function restoreSession() {
+  var s = null;
+  try { s = JSON.parse(localStorage.getItem('hj_sess') || 'null'); } catch (e) {}
+  if (!s) return;
+  if (s.role === 'emp') enterEmp(s.id);
+  else if (s.role === 'mgr') { if (s.fromEmp) ceid = s.id; enterMgr(s.id, !!s.fromEmp); }
+  else if (s.role === 'hr') enterHr();
+}
+
+function logout() {
+  clearSess();
+  ceid = 0; window._mgrEmpId = 0; curRole = ''; hrGM = false;
+  G('gm-tab-btn').style.display = 'none';
+  fillLoginSelects();
+  showPage('pg-login');
+}
+
+
+// ========== أنواع الإجازات / الطباعة / صلاحية المدير ==========
+function isMgrId(id) { var e = eById(id) || {}; return !!e.mps || emps.some(function(x){ return x.mgrId === id; }); }
+
+function typeObj(k) { return (_d.types || []).find(function(t){ return t.k === k; }) || null; }
+function dedOf(k) { var t = typeObj(k); return t ? (t.d || '') : ''; }
+function reqDk(r) { return r.dk !== undefined ? r.dk : dedOf(r.type); }
+function addDays(s, n) { var d = new Date(s + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+var TYPE_ICONS = { annual: '🏖️', medical: '🩺', unpaid: '💼', emergency: '⚡' };
+function typeIcon(t) { return TYPE_ICONS[t.k] || (t.g === 'official' ? '🇪🇬' : '📌'); }
+function dedText(t) { return t.d === 'annual' ? 'يخصم من الرصيد السنوي' : t.d === 'medical' ? 'يخصم من الرصيد الطبي' : 'لا يخصم من أي رصيد'; }
+
+function renderTypeChips() {
+  var box = G('type-chips'); if (!box) return;
+  var cur = document.querySelector('#et-req .chip.sel'); var ck = cur ? cur.dataset.t : '';
+  var tile = function(t) {
+    return '<div class="chip tile' + (t.k === ck ? ' sel' : '') + '" data-t="' + esc(t.k) + '" onclick="selChip(this)"><span class="ti">' + typeIcon(t) + '</span><span class="tn">' + esc(t.l) + '</span><span class="td">' + dedText(t) + (t.dd > 0 ? ' • ' + t.dd + (t.dd === 1 ? ' يوم' : ' أيام') : '') + '</span></div>';
+  };
+  var reg = _d.types.filter(function(t){ return t.g !== 'official'; }), off = _d.types.filter(function(t){ return t.g === 'official'; });
+  box.innerHTML = '<div class="tiles">' + reg.map(tile).join('') + '</div>' +
+    (off.length ? '<div class="tile-group">🇪🇬 الإجازات الرسمية في مصر</div><div class="tiles">' + off.map(tile).join('') + '</div>' : '');
+  updReqSummary();
+}
+
+function selChip(el) {
+  document.querySelectorAll('#et-req .chip').forEach(function(c){ c.classList.remove('sel'); });
+  el.classList.add('sel');
+  G('dedwrap').style.display = (el.dataset.t === 'unpaid') ? 'block' : 'none';
+  var re = G('rqe');
+  if (re.dataset.auto === '1') { re.value = ''; re.dataset.auto = '0'; }
+  onStartChange();
+}
+function onStartChange() {
+  var lt = document.querySelector('#et-req .chip.sel'); var t = lt ? typeObj(lt.dataset.t) : null;
+  var s = G('rqs').value, re = G('rqe');
+  if (s && t && t.dd > 0 && (!re.value || re.dataset.auto === '1')) { re.value = addDays(s, t.dd - 1); re.dataset.auto = '1'; }
+  updReqSummary();
+}
+function onEndChange() { G('rqe').dataset.auto = '0'; updReqSummary(); }
+function updReqSummary() {
+  var box = G('rq-sum'); if (!box) return;
+  var lt = document.querySelector('#et-req .chip.sel');
+  if (!lt) { box.innerHTML = '<div class="sm">اختر نوع الإجازة ثم حدد التاريخ لعرض ملخص الطلب</div>'; return; }
+  var t = typeObj(lt.dataset.t) || {}; var s = G('rqs').value, e = G('rqe').value;
+  if (s && !e && t.dd > 0) e = addDays(s, t.dd - 1);
+  var days = (s && e) ? dbt(s, e) : 0; var emp = eById(ceid) || {};
+  var rem = t.d === 'annual' ? (emp.ann || 0) - (emp.used || 0) : t.d === 'medical' ? (emp.med || 0) : null;
+  var bad = rem !== null && days > rem;
+  var after = rem === null ? 'غير متأثر' : ((days > 0 ? rem - days : rem) + ' يوم');
+  box.innerHTML = '<div class="rq-sum-grid' + (bad ? ' bad' : '') + '"><div><span>المدة</span><b>' + (days > 0 ? days + (days === 1 ? ' يوم' : ' أيام') : '—') + '</b></div>' +
+    '<div><span>الخصم</span><b>' + (t.d === 'annual' ? 'من السنوي' : t.d === 'medical' ? 'من الطبي' : 'لا يوجد') + '</b></div>' +
+    '<div><span>' + (rem === null ? 'الرصيد' : 'الرصيد بعد الطلب') + '</span><b>' + after + '</b></div></div>' +
+    (bad ? '<div class="rq-warn">الرصيد غير كافٍ لهذه المدة</div>' : '');
+}
+
+function renderTypes() {
+  var opt = function(v, cur, l) { return '<option value="' + v + '"' + (cur === v ? ' selected' : '') + '>' + l + '</option>'; };
+  G('ht-types').innerHTML = '<div class="card"><h3>إضافة نوع إجازة جديد</h3><input id="nt-name" placeholder="اسم الإجازة (مثال: إجازة زواج)">' +
+    '<label>تخصم من</label><select id="nt-ded">' + opt('', '', 'لا تخصم من أي رصيد') + opt('annual', '', 'الرصيد السنوي') + opt('medical', '', 'الرصيد الطبي') + '</select>' +
+    '<label>عدد الأيام الافتراضي (اختياري)</label><input type="number" id="nt-dd" min="0" placeholder="اتركه فارغاً إن لم يكن محدداً">' +
+    '<label style="display:flex;align-items:center"><input type="checkbox" id="nt-off">إجازة رسمية (تظهر ضمن الإجازات الرسمية)</label>' +
+    '<button class="btn btn-primary" onclick="addType()">إضافة</button></div>' +
+    '<div class="card"><h3>أنواع الإجازات</h3><div class="sm" style="margin-bottom:8px">حدد لكل إجازة هل تخصم من الرصيد السنوي أو الطبي أو لا تخصم، ويمكن تحديد عدد أيام افتراضي (اختياري، وللموظف تعديله).</div>' +
+    '<div class="tbl-wrap"><table class="tbl-types"><tr><th>الإجازة</th><th>تخصم من</th><th>الأيام الافتراضية</th><th></th></tr>' +
+    _d.types.map(function(t) {
+      return '<tr><td>' + typeIcon(t) + ' ' + esc(t.l) + (t.b ? ' <span class="badge" style="background:#e8f0fe;color:#1a56b8">أساسي</span>' : '') + (t.g === 'official' ? ' <span class="badge" style="background:#e6f4ea;color:#137333">رسمية</span>' : '') + '</td>' +
+        '<td><select style="width:auto;margin:0" onchange="setTypeDed(\'' + t.k + '\',this.value)">' + opt('', t.d || '', 'لا تخصم') + opt('annual', t.d || '', 'السنوي') + opt('medical', t.d || '', 'الطبي') + '</select></td>' +
+        '<td><input type="number" min="0" value="' + (t.dd || '') + '" placeholder="—" onchange="setTypeDd(\'' + t.k + '\',this.value)"></td>' +
+        '<td>' + (t.b ? '' : '<button class="btn btn-danger btn-sm" onclick="delType(\'' + t.k + '\')" title="حذف">🗑</button>') + '</td></tr>';
+    }).join('') + '</table></div></div>';
+}
+function setTypeDed(k, v) { var t = typeObj(k); if (!t) return; t.d = v; sv2(); }
+function setTypeDd(k, v) { var t = typeObj(k); if (!t) return; t.dd = Math.max(0, parseInt(v) || 0); sv2(); }
+function addType() {
+  var n = G('nt-name').value.trim();
+  if (!n) { alert('أدخل اسم الإجازة'); return; }
+  if (_d.types.some(function(t){ return t.l === n; })) { alert('هذا النوع موجود بالفعل'); return; }
+  _d.types.push({ k: 'c' + Date.now(), l: n, b: 0, d: G('nt-ded').value, dd: Math.max(0, parseInt(G('nt-dd').value) || 0), g: G('nt-off').checked ? 'official' : '' });
+  sv2(); renderTypes();
+}
+function delType(k) {
+  if (reqs.some(function(r){ return r.type === k; })) { alert('لا يمكن حذف نوع مستخدم في طلبات سابقة'); return; }
+  if (!confirm('حذف هذا النوع؟')) return;
+  _d.types = _d.types.filter(function(t){ return t.k !== k; });
+  sv2(); renderTypes();
+}
+
+// ===== كلمة المرور الشخصية =====
+function togglePw(id) { var i = G(id); i.type = (i.type === 'password') ? 'text' : 'password'; }
+function openMyPw(first) {
+  var id = curRole === 'mgr' ? window._mgrEmpId : ceid; var x = eById(id); if (!x) return;
+  G('mp-id').value = id;
+  G('mp-ps').value = x.ps || ''; G('mp-ps2').value = x.ps || ''; G('mp-mps').value = x.mps || '';
+  ['mp-ps', 'mp-ps2', 'mp-mps'].forEach(function(i){ G(i).type = 'password'; });
+  G('mp-mwrap').style.display = (curRole === 'mgr') ? 'block' : 'none';
+  G('mp-msg').textContent = first ? 'مرحباً! دخلت بالكلمة العامة. اختر الآن كلمة مرور خاصة بك لتأمين حسابك.' : (x.psSet ? 'يمكنك إظهار كلمة مرورك أو تعديلها من هنا.' : 'لم تحدد كلمة مرور خاصة بعد، فأنت تدخل بالكلمة العامة.');
+  openModal('mypw-modal');
+}
+function saveMyPw() {
+  var x = eById(parseInt(G('mp-id').value)); if (!x) return;
+  var p = G('mp-ps').value, p2 = G('mp-ps2').value;
+  if (p.length < 4) { alert('كلمة المرور يجب ألا تقل عن 4 أحرف'); return; }
+  if (p !== p2) { alert('تأكيد كلمة المرور غير مطابق'); return; }
+  if (p === _d.PW.emp) { alert('اختر كلمة مرور مختلفة عن الكلمة العامة'); return; }
+  if (curRole === 'mgr') {
+    var m = G('mp-mps').value;
+    if (m && m.length < 4) { alert('كلمة مرور المدير يجب ألا تقل عن 4 أحرف'); return; }
+    if (m) x.mps = m;
+  }
+  x.ps = p; x.psSet = true;
+  sv2(); closeModal('mypw-modal'); alert('✅ تم حفظ كلمة المرور');
+}
+function pwCell(x) {
+  var st = x.psSet ? '<span class="badge" style="background:#e6f4ea;color:#137333">شخصية</span>' : '<span class="badge" style="background:#fef7e0;color:#b06000">عامة</span>';
+  return '<span class="pwv" data-p="' + esc(x.ps || '') + '">' + (x.ps ? '••••••' : '—') + '</span> <button class="btn btn-gray btn-sm" onclick="revealPw(this)">👁</button> ' + st +
+    (x.mps ? '<div class="sm">مدير: <span class="pwv" data-p="' + esc(x.mps) + '">••••••</span> <button class="btn btn-gray btn-sm" onclick="revealPw(this)">👁</button></div>' : '');
+}
+function revealPw(b) {
+  var s = b.previousElementSibling; if (!s) return;
+  if (s.dataset.on === '1') { s.textContent = '••••••'; s.dataset.on = '0'; }
+  else { s.textContent = s.dataset.p || '—'; s.dataset.on = '1'; }
+}
+function resetPw(id) {
+  var x = eById(id); if (!x) return;
+  if (!confirm('إعادة تعيين كلمة مرور "' + x.name + '"؟ سيدخل بالكلمة العامة ويختار كلمة جديدة.')) return;
+  x.ps = ''; x.psSet = false; sv2(); refreshView();
+}
+
+
+function actBtns(r) {
+  if (r.st !== 'hr_approved') return '';
+  var b = '<button class="btn btn-gray btn-sm" onclick="leaveDoc(' + r.id + ',\'pdf\')">📄 PDF</button>';
+  if (curRole === 'emp' || curRole === 'hr') b += ' <button class="btn btn-gray btn-sm" onclick="leaveDoc(' + r.id + ',\'print\')">🖨 طباعة</button>';
+  return b;
+}
+function docBtns(r) { return r.st === 'hr_approved' ? '<div class="acts">' + actBtns(r) + '</div>' : ''; }
+
+function leaveDoc(id, mode) {
+  var r = reqs.find(function(x){ return x.id === id; });
+  if (!r || r.st !== 'hr_approved') { alert('الطباعة والتصدير متاحان بعد الموافقة فقط'); return; }
+  var e = eById(r.eid) || {}; var m = eById(e.mgrId);
+  var w = window.open('', '_blank');
+  if (!w) { alert('اسمح بالنوافذ المنبثقة (Pop-ups) لهذا الموقع ثم أعد المحاولة'); return; }
+  var F = function(k, v, full) { return '<div class="f' + (full ? ' full' : '') + '"><span>' + k + '</span><b>' + esc(v == null || v === '' ? '-' : v) + '</b></div>'; };
+  var extra = '';
+  if (r.type === 'unpaid') extra += F('مبلغ الخصم', (r.ded || 0) + ' جنيه');
+  if (reqDk(r) === 'annual') extra += F('الرصيد السنوي المتبقي', ((e.ann || 0) - (e.used || 0)) + ' يوم');
+  var css = "@page{size:A4;margin:10mm}*{box-sizing:border-box}body{font-family:'Cairo',Tahoma,Arial,sans-serif;margin:0;padding:10px;color:#1b1f24;direction:rtl;-webkit-print-color-adjust:exact;print-color-adjust:exact}" +
+    ".sheet{max-width:780px;margin:0 auto;border:2px solid #0b5ed7;border-radius:16px;overflow:hidden;background:#fff}" +
+    ".hd{background:linear-gradient(135deg,#1a73e8,#0a3d91);color:#fff;padding:18px 24px;display:flex;justify-content:space-between;align-items:center}.hd h1{margin:0;font-size:25px;font-weight:800}.hd p{margin:2px 0 0;font-size:13px;opacity:.9}" +
+    ".ok{background:#22c55e;color:#fff;border-radius:22px;padding:7px 20px;font-weight:800;font-size:15px}" +
+    ".title{text-align:center;padding:14px 0 2px;font-size:21px;font-weight:800;color:#0a3d91}.num{text-align:center;color:#6b7280;font-size:13px;margin-bottom:8px}" +
+    ".sec{margin:12px 22px 0}.sec h3{margin:0 0 8px;font-size:14px;color:#fff;background:#0b5ed7;display:inline-block;padding:3px 16px;border-radius:8px;font-weight:700}" +
+    ".grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f{border:1px solid #d6e2f7;background:#f5f9ff;border-radius:10px;padding:7px 12px}.f span{display:block;font-size:12px;color:#5b6b85;font-weight:600}.f b{font-size:15px;font-weight:700}.f.full{grid-column:1/-1}" +
+    ".type{display:inline-block;background:#fff3cd;color:#8a5a00;border:1px solid #f5d27a;border-radius:20px;padding:2px 16px;font-weight:800;margin-bottom:8px}" +
+    ".period{display:flex;align-items:center;justify-content:space-around;gap:10px;background:linear-gradient(135deg,#ecfdf3,#dcfce7);border:2px solid #86efac;border-radius:14px;padding:12px 18px;margin-bottom:8px}" +
+    ".pd{text-align:center}.pd span{display:block;font-size:12px;color:#166534;font-weight:700}.pd b{font-size:17px;color:#14532d}.ar{font-size:26px;color:#16a34a;font-weight:800}" +
+    ".days{width:80px;height:80px;border-radius:50%;background:#16a34a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800}.days b{font-size:30px;line-height:1}.days span{font-size:12px}" +
+    ".sigs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 22px 6px}.sg{border:1.5px dashed #94a3b8;border-radius:12px;height:112px;padding:9px;text-align:center;display:flex;flex-direction:column;justify-content:space-between}.sg b{font-size:14px;color:#0a3d91}.sg small{color:#6b7280;font-size:12px}" +
+    ".ft{display:flex;justify-content:space-between;background:#f1f5f9;padding:9px 22px;margin-top:14px;font-size:12px;color:#475569}.tip{max-width:780px;margin:0 auto 10px;background:#fff8e1;padding:9px 14px;border-radius:10px;font-size:13px}@media print{.tip{display:none}body{padding:0}}";
+  var html = '<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>إجازة - ' + esc(e.name) + ' - ' + r.id + '</title>' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet"><style>' + css + '</style></head><body>' +
+    (mode === 'pdf' ? '<div class="tip">لحفظ الملف: في نافذة الطباعة اختر الوجهة «حفظ كملف PDF» ثم اضغط حفظ.</div>' : '') +
+    '<div class="sheet"><div class="hd"><div><h1>هاوجين مصر</h1><p>HAOJIN MASR — إدارة الموارد البشرية</p></div><div class="ok">✔ إجازة معتمدة</div></div>' +
+    '<div class="title">نموذج إجازة</div><div class="num">رقم الطلب: ' + r.id + '</div>' +
+    '<div class="sec"><h3>بيانات الموظف</h3><div class="grid">' + F('اسم الموظف', e.name) + F('رقم الموظف', e.no) + F('المسمى الوظيفي', e.title) + F('القسم', e.dept) + F('المدير المباشر', m ? m.name : '—', true) + '</div></div>' +
+    '<div class="sec"><h3>تفاصيل الإجازة</h3><div><span class="type">' + esc(typeLbl(r.type)) + '</span></div>' +
+    '<div class="period"><div class="pd"><span>من تاريخ</span><b>' + fmtDate(r.s) + '</b></div><div class="ar">←</div><div class="pd"><span>إلى تاريخ</span><b>' + fmtDate(r.e) + '</b></div><div class="days"><b>' + r.days + '</b><span>يوم</span></div></div>' +
+    '<div class="grid">' + F('السبب', r.rsn, true) + F('الموظف البديل', r.acting) + F('ملاحظة المدير', r.mnote) + extra + F('تاريخ التقديم', fmtDate(r.sub)) + F('تاريخ الاعتماد', fmtDate(r.mdt)) + '</div></div>' +
+    '<div class="sigs"><div class="sg"><b>المدير المباشر</b><small>' + esc(m ? m.name : '') + '</small></div><div class="sg"><b>مدير الموارد البشرية</b><small>الاسم والتوقيع</small></div><div class="sg"><b>الحفظ</b><small>نسخة الأرشيف</small></div></div>' +
+    '<div class="ft"><span>تم إصدار هذا النموذج من نظام إجازات هاوجين مصر</span><span>تاريخ الطباعة: ' + fmtDate(new Date().toISOString()) + '</span></div></div></body></html>';
+  w.document.open(); w.document.write(html); w.document.close();
+  var done = false;
+  var go = function() { if (done) return; done = true; try { w.focus(); w.print(); } catch (x) {} };
+  try { w.document.fonts.ready.then(function() { setTimeout(go, 400); }); } catch (x) {}
+  setTimeout(go, 2500);
+}
+
+function empMgrLogin() {
+  var emp = eById(ceid); if (!emp) return;
+  if (!isMgrId(ceid)) { alert('ليس لديك صلاحية'); return; }
+  var p = prompt('أدخل كلمة مرور المدير');
+  if (p === null) return;
+  if (!((emp.mps && emp.mps === p) || p === _d.PW.mgr)) { alert('كلمة المرور غير صحيحة'); return; }
+  enterMgr(ceid, true);
+}
+function backToEmp() { enterEmp(ceid); }
+
+// ========== 7. Employee page ==========
+function eTab(n) {
+  setActiveTab('e', ['home','req','report','notif'], n);
+  if (n === 'home') rEHome();
+  if (n === 'req') renderTypeChips();
+  if (n === 'report') renderEReqs();
+  if (n === 'notif') renderENotifs();
+  updNotifBadge('notif_emp_' + ceid, 'etb-notif', n === 'notif');
+}
+
+
+var eHF = 'recent';
+function setEHome(f) { eHF = (eHF === f) ? 'recent' : f; rEHome(); }
+function rEHome() {
+  var emp = eById(ceid); if (!emp) return;
+  var mineAll = reqs.filter(function(r){ return r.eid === ceid; }).sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+  var unpaidDays = mineAll.filter(function(r){ return r.type === 'unpaid' && r.st === 'hr_approved'; }).reduce(function(a, r){ return a + r.days; }, 0);
+  var list = eHF === 'recent' ? mineAll.slice(0, 5) : mineAll.filter(function(r){ return r.type === eHF; });
+  var title = eHF === 'recent' ? 'آخر الطلبات' : 'طلبات الإجازة ال' + typeLbl(eHF);
+  G('et-home').innerHTML =
+    '<div class="card"><div class="row" style="justify-content:flex-start"><span class="avatar" style="background:' + esc(emp.color || '#1a73e8') + '">' + initials(emp.name) + '</span><div><b>' + esc(emp.name) + '</b><div class="sm">' + esc(emp.title) + ' • ' + esc(emp.dept) + '</div></div></div></div>' +
+    '<div class="stat-grid">' +
+      typeBalCard('رصيد سنوي متبقٍ', (emp.ann || 0) - (emp.used || 0), 'var(--primary)', "setEHome('annual')", eHF === 'annual') +
+      typeBalCard('رصيد طبي', emp.med || 0, 'var(--success)', "setEHome('medical')", eHF === 'medical') +
+      typeBalCard('بدون راتب (أيام)', unpaidDays, 'var(--warning)', "setEHome('unpaid')", eHF === 'unpaid') +
+    '</div><div class="sm" style="margin-bottom:6px">اضغط على أي بطاقة لعرض طلباتها</div><h3>' + title + '</h3>' +
+    (list.length ? list.map(function(r) {
+      var can = (r.st === 'manager_pending' || r.st === 'hr_pending') ? '<div class="acts"><button class="btn btn-danger btn-sm" onclick="cancelReq(' + r.id + ')">إلغاء الطلب</button></div>' : '';
+      return reqCard(r, can);
+    }).join('') : '<div class="empty">لا توجد طلبات</div>');
+}
+
+function cancelReq(id) {
+  var r = reqs.find(function(x){ return x.id === id; });
+  if (!r || r.eid !== ceid) return;
+  if (r.st !== 'manager_pending' && r.st !== 'hr_pending') return;
+  if (!confirm('إلغاء هذا الطلب؟')) return;
+  r.st = 'cancelled'; r.mdt = new Date().toISOString();
+  sv2(); rEHome(); renderEReqs();
+}
+
+function subReq() {
+  // Step 1: check leave type chip selection
+  var lt = document.querySelector('#et-req .chip.sel');
+  if (!lt) { alert('اختر نوع الإجازة أولاً'); return; }
+
+  // Step 2: check dates
+  var s = G('rqs').value, e = G('rqe').value;
+  var ltd = (typeObj(lt.dataset.t) || {}).dd || 0;
+  if (s && !e && ltd > 0) e = addDays(s, ltd - 1);
+  if (!s || !e) { alert('اختر تواريخ الإجازة'); return; }
+  var days = dbt(s, e);
+  if (days <= 0) { alert('التواريخ غير صحيحة'); return; }
+
+  // Step 3: verify ceid is set (logged-in employee)
+  if (!ceid) { alert('خطأ: لم يتم تحديد الموظف. سجل الدخول مجدداً'); return; }
+  var emp = emps.find(function(x) { return x.id === ceid; });
+  if (!emp) { alert('لم يتم العثور على الموظف'); return; }
+
+  // Step 4: check balance
+  var type = lt.dataset.t;
+  var ded = (type === 'unpaid') ? (parseInt(G('dedamt').value) || 0) : 0;
+  var dk = dedOf(type);
+  if (dk === 'annual') {
+    var rem = (emp.ann || 0) - (emp.used || 0);
+    if (days > rem) { alert('الرصيد السنوي غير كافٍ'); return; }
+  }
+  if (dk === 'medical') {
+    if (days > (emp.med || 0)) { alert('الرصيد الطبي غير كافٍ'); return; }
+  }
+
+  // Step 5: create request and save
+  var newReq = {
+    id: _d.nrid++, eid: ceid, type: type, dk: dk, ded: ded,
+    s: s, e: e, days: days, rsn: G('rqrsn').value || '',
+    st: emp.mgrId ? 'manager_pending' : 'hr_pending',
+    sub: new Date().toISOString(), notified: false,
+    att: '', acting: G('rqact').value || '', mnote: '', mdt: ''
+  };
+  _d.reqs.push(newReq);
+  reqs = _d.reqs;  // IMPORTANT: sync reference after push
+  sv2();           // save to localStorage + Firebase
+
+  // Step 6: إشعار خارجي للمدير المباشر فقط (أو للموارد البشرية لو لا يوجد مدير) باسم مقدم الطلب
+  ensureTopics();
+  var mgrObj = emp.mgrId ? eById(emp.mgrId) : null;
+  var nBody = 'الموظف ' + emp.name + ' طلب إجازة ' + typeLbl(type) + ' لمدة ' + days + ' أيام';
+  if (mgrObj) notify(mgrObj.mtp, 'طلب إجازة جديد - هاوجين مصر', nBody);
+  else notify(_d.hrTopic, 'طلب إجازة جديد - هاوجين مصر', nBody);
+  // Step 7: reset form and go home
+  G('rqs').value = ''; G('rqe').value = ''; G('rqrsn').value = ''; G('rqact').value = ''; G('dedamt').value = '';
+  G('dedwrap').style.display = 'none'; G('rqe').dataset.auto = '0';
+  document.querySelectorAll('#et-req .chip').forEach(function(c){ c.classList.remove('sel'); });
+  alert('✅ تم إرسال طلبك بنجاح!');
+  eTab('home');
+  rEHome();
+}
+
+function setEFilter(f) { eFilter = f; renderEReqs(); }
+function renderEReqs() {
+  G('e-rep-filter').innerHTML = filterBar('setEFilter', eFilter);
+  var list = reqs.filter(function(r){ return r.eid === ceid && matchFilter(r, eFilter); })
+    .sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+  G('e-rep-list').innerHTML = reqTable(list);
+}
+function renderENotifs() { renderNotifs('notif_emp_' + ceid, 'et-notif', 'etb-notif'); }
+
+// ========== 8. Manager page ==========
+function mTab(n) {
+  setActiveTab('m', ['home','detail','team','report','notif'], n);
+  if (n === 'home') rMHome();
+  if (n === 'detail') renderMDetail();
+  if (n === 'team') renderMTeam();
+  if (n === 'report') renderMReports();
+  if (n === 'notif') renderMNotifs();
+  updNotifBadge('notif_mgr_' + window._mgrEmpId, 'mtb-notif', n === 'notif');
+}
+
+var mHF = 'pending';
+function setMHome(f) { mHF = f; rMHome(); }
+function teamHtml() {
+  var team = emps.filter(function(x){ return x.mgrId === window._mgrEmpId; });
+  return team.length ? team.map(function(x) {
+    return '<div class="card"><div class="row" style="justify-content:flex-start"><span class="avatar" style="background:' + esc(x.color || '#1a73e8') + '">' + initials(x.name) + '</span><div><b>' + esc(x.name) + '</b><div class="sm">' + esc(x.title) + ' • ' + esc(x.dept) + '</div></div></div>' +
+      '<div class="stat-grid" style="margin:8px 0 0">' + typeBalCard('سنوي متبقٍ', (x.ann || 0) - (x.used || 0), 'var(--primary)') + typeBalCard('طبي', x.med || 0, 'var(--success)') + typeBalCard('مستخدم', x.used || 0, 'var(--text-secondary)') + '</div></div>';
+  }).join('') : '<div class="empty">لا يوجد موظفون تحت إشرافك</div>';
+}
+function rMHome() {
+  var ids = myTeamIds();
+  var tr = reqs.filter(function(r){ return ids.indexOf(r.eid) >= 0; }).sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+  var pend = tr.filter(function(r){ return r.st === 'manager_pending'; });
+  var appr = tr.filter(function(r){ return r.st === 'hr_pending' || r.st === 'hr_approved'; });
+  var rej = tr.filter(function(r){ return r.st === 'rejected'; });
+  var html = '<div class="stat-grid four">' +
+    typeBalCard('أعضاء الفريق', ids.length, 'var(--primary)', "setMHome('team')", mHF === 'team') +
+    typeBalCard('بانتظارك', pend.length, 'var(--warning)', "setMHome('pending')", mHF === 'pending') +
+    typeBalCard('تمت الموافقة', appr.length, 'var(--success)', "setMHome('approved')", mHF === 'approved') +
+    typeBalCard('مرفوضة', rej.length, 'var(--danger)', "setMHome('rejected')", mHF === 'rejected') + '</div>';
+  var titles = { team: 'أعضاء الفريق', pending: 'الطلبات بانتظار قرارك', approved: 'الطلبات التي وافقت عليها', rejected: 'الطلبات المرفوضة' };
+  var list = mHF === 'pending' ? pend : mHF === 'approved' ? appr : rej;
+  html += '<h3>' + titles[mHF] + '</h3>';
+  if (mHF === 'team') html += teamHtml();
+  else if (!list.length) html += '<div class="empty">لا توجد طلبات هنا</div>';
+  else html += list.map(function(r) {
+    return reqCard(r, r.st === 'manager_pending' ? '<div class="acts"><button class="btn btn-primary btn-sm" onclick="openMDetail(' + r.id + ')">فتح الطلب</button></div>' : '');
+  }).join('');
+  G('mt-home').innerHTML = html;
+}
+
+function openMDetail(id) { window._curReq = id; mTab('detail'); }
+
+function renderMDetail() {
+  var r = reqs.find(function(x){ return x.id === window._curReq; });
+  var box = G('mt-detail');
+  if (!r) { box.innerHTML = '<div class="empty">اختر طلباً من الصفحة الرئيسية</div>'; return; }
+  var e = eById(r.eid) || {};
+  var actions = '';
+  if (r.st === 'manager_pending' && e.mgrId === window._mgrEmpId) {
+    actions = '<label>ملاحظة المدير</label><textarea id="m-note" rows="3"></textarea>' +
+      '<div class="acts"><button class="btn btn-success" onclick="approveMgr(' + r.id + ')">موافقة</button><button class="btn btn-danger" onclick="rejectMgr(' + r.id + ')">رفض</button></div>';
+  }
+  box.innerHTML = reqCard(r, '') +
+    '<div class="card"><div class="sm">رصيد الموظف السنوي المتبقي: ' + ((e.ann || 0) - (e.used || 0)) + ' • الطبي: ' + (e.med || 0) + '</div><div class="sm">تاريخ التقديم: ' + fmtDate(r.sub) + '</div>' + actions + '</div>';
+}
+
+function approveMgr(id) {
+  var r = reqs.find(function(x){ return x.id === id; });
+  if (!r || r.st !== 'manager_pending') return;
+  var e = eById(r.eid); if (!e || e.mgrId !== window._mgrEmpId) return;
+  r.st = 'hr_pending';
+  r.mnote = (G('m-note') ? G('m-note').value : '') || '';
+  r.mdt = new Date().toISOString();
+  sv2();
+  notify(_d.hrTopic, 'طلب بانتظار الموارد البشرية - هاوجين مصر', 'وافق المدير على طلب إجازة ' + typeLbl(r.type) + ' للموظف ' + e.name);
+  notify(e.tp, 'تحديث على طلبك - هاوجين مصر', 'وافق مديرك على طلبك وأُحيل إلى الموارد البشرية');
+  alert('✅ تمت الموافقة وإحالة الطلب إلى HR');
+  window._curReq = 0;
+  mTab('home');
+}
+
+function rejectMgr(id) {
+  var r = reqs.find(function(x){ return x.id === id; });
+  if (!r || r.st !== 'manager_pending') return;
+  var e = eById(r.eid); if (!e || e.mgrId !== window._mgrEmpId) return;
+  r.st = 'rejected';
+  r.mnote = (G('m-note') ? G('m-note').value : '') || '';
+  r.mdt = new Date().toISOString();
+  sv2();
+  notify(e.tp, 'تم رفض طلب إجازتك - هاوجين مصر', 'رفض المدير طلب إجازتك من ' + r.s + ' إلى ' + r.e + (r.mnote ? ' - ' + r.mnote : ''));
+  window._curReq = 0;
+  mTab('home');
+}
+
+function renderMTeam() { G('mt-team').innerHTML = teamHtml(); }
+
+function setMFilter(f) { mFilter = f; renderMReports(); }
+function renderMReports() {
+  G('m-rep-filter').innerHTML = filterBar('setMFilter', mFilter);
+  var ids = myTeamIds();
+  var list = reqs.filter(function(r){ return ids.indexOf(r.eid) >= 0 && matchFilter(r, mFilter); })
+    .sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+  G('m-rep-list').innerHTML = reqTable(list);
+}
+function renderMNotifs() { renderNotifs('notif_mgr_' + window._mgrEmpId, 'mt-notif', 'mtb-notif'); }
+
+// ========== 9. HR page ==========
+function hTab(n) {
+  setActiveTab('h', ['home','emps','report','all','types','gm'], n);
+  if (n === 'types') renderTypes();
+  if (n === 'home') rHHome();
+  if (n === 'emps') renderHEmps();
+  if (n === 'report') renderHReport();
+  if (n === 'all') renderHAll();
+  if (n === 'gm') renderGMEmps('ht-gm');
+}
+
+function hrGMLogin() {
+  var p = prompt('أدخل كلمة مرور المدير العام');
+  if (p === null) return;
+  if (p !== _d.PW.gm) { alert('كلمة المرور غير صحيحة'); return; }
+  hrGM = true;
+  G('gm-tab-btn').style.display = 'block';
+  hTab('gm');
+}
+
+var hHF = 'hr';
+function setHHome(f) { hHF = f; rHHome(); }
+function rHHome() {
+  var by = function(s){ return reqs.filter(function(r){ return r.st === s; }); };
+  var pend = by('hr_pending').sort(function(a,b){ return a.sub.localeCompare(b.sub); });
+  var mg = by('manager_pending'), ap = by('hr_approved'), rj = by('rejected');
+  var html = '<div class="stat-grid four">' +
+    typeBalCard('بانتظار HR', pend.length, 'var(--primary)', "setHHome('hr')", hHF === 'hr') +
+    typeBalCard('بانتظار المدراء', mg.length, 'var(--warning)', "setHHome('mgr')", hHF === 'mgr') +
+    typeBalCard('موافق عليها', ap.length, 'var(--success)', "setHHome('approved')", hHF === 'approved') +
+    typeBalCard('مرفوضة', rj.length, 'var(--danger)', "setHHome('rejected')", hHF === 'rejected') + '</div>';
+  var titles = { hr: 'بانتظار الموارد البشرية', mgr: 'بانتظار موافقة المدراء', approved: 'الطلبات الموافق عليها', rejected: 'الطلبات المرفوضة' };
+  html += '<h3>' + titles[hHF] + '</h3>';
+  if (hHF === 'hr') {
+    if (pend.length) {
+      html += '<div class="acts" style="margin-bottom:10px"><button class="btn btn-gray btn-sm" onclick="toggleAllHR()">تحديد الكل</button><button class="btn btn-success btn-sm" onclick="bulkApprove()">موافقة على المحدد</button><button class="btn btn-danger btn-sm" onclick="bulkReject()">رفض المحدد</button></div>';
+      html += pend.map(function(r) {
+        return reqCard(r, '<div class="acts"><button class="btn btn-success btn-sm" onclick="approveHR(' + r.id + ')">موافقة</button><button class="btn btn-danger btn-sm" onclick="rejectHR(' + r.id + ')">رفض</button></div>', '<input type="checkbox" class="hr-chk" value="' + r.id + '">');
+      }).join('');
+    } else html += '<div class="empty">لا توجد طلبات بانتظار الموارد البشرية</div>';
+  } else {
+    var list = (hHF === 'mgr' ? mg : hHF === 'approved' ? ap : rj).slice().sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+    html += list.length ? list.map(function(r){ return reqCard(r, ''); }).join('') : '<div class="empty">لا توجد طلبات هنا</div>';
+  }
+  G('ht-home').innerHTML = html;
+}
+
+function toggleAllHR() {
+  var boxes = document.querySelectorAll('.hr-chk');
+  var all = Array.prototype.every.call(boxes, function(b){ return b.checked; });
+  Array.prototype.forEach.call(boxes, function(b){ b.checked = !all; });
+}
+function selectedHR() {
+  return Array.prototype.map.call(document.querySelectorAll('.hr-chk:checked'), function(b){ return parseInt(b.value); });
+}
+
+function approveHR(reqId, silent) {
+  var req = reqs.find(function(r){ return r.id === reqId; });
+  if (!req || req.st !== 'hr_pending') return false;
+  var emp = emps.find(function(x){ return x.id === req.eid; });
+  if (emp) {
+    if (reqDk(req) === 'annual' && req.days > (emp.ann || 0) - (emp.used || 0)) {
+      if (!silent) alert('الرصيد السنوي للموظف غير كافٍ للموافقة');
+      return false;
+    }
+    if (reqDk(req) === 'medical' && req.days > (emp.med || 0)) {
+      if (!silent) alert('الرصيد الطبي للموظف غير كافٍ للموافقة');
+      return false;
+    }
+  }
+  req.st = 'hr_approved';
+  req.mdt = new Date().toISOString();
+
+  // DEDUCT BALANCE HERE AND ONLY HERE
+  if (emp) {
+    if (reqDk(req) === 'annual') emp.used = (emp.used || 0) + req.days;
+    if (reqDk(req) === 'medical') emp.med = Math.max(0, (emp.med || 0) - req.days);
+  }
+  sv2();
+  if (emp) notify(emp.tp, 'تمت الموافقة على إجازتك - هاوجين مصر', 'تمت الموافقة على إجازتك من ' + req.s + ' إلى ' + req.e);
+  if (!silent) rHHome();
+  return true;
+}
+
+function rejectHR(reqId, silent, note) {
+  var req = reqs.find(function(r){ return r.id === reqId; });
+  if (!req || req.st !== 'hr_pending') return false;
+  if (note === undefined) { note = prompt('سبب الرفض (اختياري)'); if (note === null) return false; }
+  req.st = 'rejected';
+  req.mnote = note ? ((req.mnote ? req.mnote + ' | ' : '') + 'HR: ' + note) : req.mnote;
+  req.mdt = new Date().toISOString();
+  sv2();
+  var rejEmp = eById(req.eid);
+  if (rejEmp) notify(rejEmp.tp, 'تم رفض طلب إجازتك - هاوجين مصر', 'رفضت الموارد البشرية طلب إجازتك من ' + req.s + ' إلى ' + req.e + (note ? ' - ' + note : ''));
+  if (!silent) rHHome();
+  return true;
+}
+
+function bulkApprove() {
+  var ids = selectedHR();
+  if (!ids.length) { alert('حدد طلباً واحداً على الأقل'); return; }
+  if (!confirm('الموافقة على ' + ids.length + ' طلب؟')) return;
+  var ok = 0;
+  ids.forEach(function(id){ if (approveHR(id, true)) ok++; });
+  alert('تمت الموافقة على ' + ok + ' من ' + ids.length + ' (الباقي رصيده غير كافٍ)');
+  rHHome();
+}
+function bulkReject() {
+  var ids = selectedHR();
+  if (!ids.length) { alert('حدد طلباً واحداً على الأقل'); return; }
+  var note = prompt('سبب الرفض للجميع (اختياري)');
+  if (note === null) return;
+  ids.forEach(function(id){ rejectHR(id, true, note); });
+  rHHome();
+}
+
+function renderHEmps() {
+  G('ht-emps').innerHTML = emps.length ? '<div class="tbl-wrap"><table><tr><th>الاسم</th><th>القسم</th><th>سنوي</th><th>مستخدم</th><th>طبي</th><th>كلمة المرور</th><th></th></tr>' +
+    emps.map(function(x) {
+      return '<tr><td>' + esc(x.name) + '</td><td>' + esc(x.dept) + '</td>' +
+        '<td><input type="number" id="hb-ann-' + x.id + '" value="' + (x.ann || 0) + '"></td>' +
+        '<td><input type="number" id="hb-used-' + x.id + '" value="' + (x.used || 0) + '"></td>' +
+        '<td><input type="number" id="hb-med-' + x.id + '" value="' + (x.med || 0) + '"></td>' +
+        '<td>' + pwCell(x) + '</td><td><button class="btn btn-primary btn-sm" onclick="saveBal(' + x.id + ')">حفظ</button> <button class="btn btn-gray btn-sm" onclick="resetPw(' + x.id + ')">إعادة تعيين</button></td></tr>';
+    }).join('') + '</table></div>' : '<div class="empty">لا يوجد موظفون</div>';
+}
+function saveBal(id) {
+  var x = eById(id); if (!x) return;
+  x.ann = parseInt(G('hb-ann-' + id).value) || 0;
+  x.used = parseInt(G('hb-used-' + id).value) || 0;
+  x.med = parseInt(G('hb-med-' + id).value) || 0;
+  sv2();
+  alert('✅ تم حفظ الرصيد');
+}
+
+function statsHtml(box) {
+  var cnt = function(s){ return reqs.filter(function(r){ return r.st === s; }).length; };
+  var go = function(k){ return "repShow('" + box + "','" + k + "')"; };
+  var byType = _d.types.map(function(tt) {
+    var t = tt.k;
+    var l = reqs.filter(function(r){ return r.type === t && r.st === 'hr_approved'; });
+    if (tt.g === 'official' && !l.length) return '';
+    return '<tr><td>' + esc(tt.l) + '</td><td>' + l.length + '</td><td>' + l.reduce(function(a, r){ return a + r.days; }, 0) + '</td></tr>';
+  }).join('');
+  var byDept = _d.depts.map(function(d) {
+    var ids = emps.filter(function(x){ return x.dept === d; }).map(function(x){ return x.id; });
+    var l = reqs.filter(function(r){ return ids.indexOf(r.eid) >= 0 && r.st === 'hr_approved'; });
+    return '<tr><td>' + esc(d) + '</td><td>' + ids.length + '</td><td>' + l.reduce(function(a, r){ return a + r.days; }, 0) + '</td></tr>';
+  }).join('');
+  return '<div class="stat-grid">' + typeBalCard('الموظفون', emps.length, 'var(--primary)', go('emps')) + typeBalCard('إجمالي الطلبات', reqs.length, 'var(--text)', go('all')) + typeBalCard('معلقة', cnt('manager_pending') + cnt('hr_pending'), 'var(--warning)', go('pending')) + '</div>' +
+    '<div class="stat-grid">' + typeBalCard('موافق عليها', cnt('hr_approved'), 'var(--success)', go('approved')) + typeBalCard('مرفوضة', cnt('rejected'), 'var(--danger)', go('rejected')) + typeBalCard('ملغاة', cnt('cancelled'), '#9e9e9e', go('cancelled')) + '</div>' +
+    '<div id="' + box + '"><div class="sm" style="margin:8px 0">اضغط على أي بطاقة لعرض تفاصيلها</div></div>' +
+    '<h3 style="margin-top:14px">حسب النوع (الموافق عليها)</h3><div class="tbl-wrap"><table><tr><th>النوع</th><th>عدد الطلبات</th><th>الأيام</th></tr>' + byType + '</table></div>' +
+    '<h3 style="margin-top:14px">حسب القسم</h3><div class="tbl-wrap"><table><tr><th>القسم</th><th>الموظفون</th><th>أيام موافق عليها</th></tr>' + byDept + '</table></div>';
+}
+function repShow(box, key) {
+  var c = G(box); if (!c) return;
+  var L = { emps: 'الموظفون', all: 'كل الطلبات', pending: 'الطلبات المعلقة', approved: 'الطلبات الموافق عليها', rejected: 'الطلبات المرفوضة', cancelled: 'الطلبات الملغاة' };
+  var html = '<h3 style="margin-top:14px">' + L[key] + '</h3>';
+  if (key === 'emps') {
+    html += emps.length ? '<div class="tbl-wrap"><table><tr><th>الاسم</th><th>المسمى</th><th>القسم</th><th>المدير</th><th>سنوي متبقٍ</th><th>طبي</th></tr>' + emps.map(function(x) {
+      var m = eById(x.mgrId);
+      return '<tr><td>' + esc(x.name) + '</td><td>' + esc(x.title) + '</td><td>' + esc(x.dept) + '</td><td>' + (m ? esc(m.name) : '—') + '</td><td>' + ((x.ann || 0) - (x.used || 0)) + '</td><td>' + (x.med || 0) + '</td></tr>';
+    }).join('') + '</table></div>' : '<div class="empty">لا يوجد موظفون</div>';
+  } else {
+    var list = reqs.filter(function(r) {
+      if (key === 'all') return true;
+      if (key === 'pending') return r.st === 'manager_pending' || r.st === 'hr_pending';
+      if (key === 'approved') return r.st === 'hr_approved';
+      return r.st === key;
+    }).sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+    html += reqTable(list);
+  }
+  c.innerHTML = html;
+}
+function renderHReport() {
+  G('ht-report').innerHTML = statsHtml('hrep-list') + '<div class="acts" style="margin-top:14px"><button class="btn btn-success" onclick="exportCSV()">تصدير الطلبات CSV</button></div>';
+}
+function renderGReport() { G('gt-report').innerHTML = statsHtml('grep-list'); repShow('grep-list', 'all'); }
+
+function exportCSV() {
+  var rows = [['الموظف','القسم','النوع','من','إلى','الأيام','الخصم','الحالة','السبب','ملاحظة']];
+  reqs.forEach(function(r) {
+    var e = eById(r.eid) || {};
+    rows.push([e.name || '', e.dept || '', typeLbl(r.type), r.s, r.e, r.days, r.ded || 0, stLbl(r.st), r.rsn || '', r.mnote || '']);
+  });
+  var csv = '\uFEFF' + rows.map(function(row) {
+    return row.map(function(c){ return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\r\n');
+  download('leave-requests.csv', csv, 'text/csv;charset=utf-8');
+}
+function download(name, content, type) {
+  var blob = new Blob([content], {type: type});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 500);
+}
+
+function renderHAll() {
+  var list = reqs.slice().sort(function(a,b){ return b.sub.localeCompare(a.sub); });
+  G('ht-all').innerHTML = reqTable(list);
+}
+
+// ========== 10. GM page ==========
+function gTab(n) {
+  setActiveTab('g', ['emps','report','settings'], n);
+  if (n === 'emps') renderGMEmps('gt-emps');
+  if (n === 'report') renderGReport();
+  if (n === 'settings') renderGSettings();
+}
+
+function renderGMEmps(boxId) {
+  var html = '<div class="acts" style="margin-bottom:10px"><button class="btn btn-primary" onclick="editEmpModal(0)">➕ إضافة موظف</button></div>';
+  html += emps.length ? '<div class="tbl-wrap"><table><tr><th>الرقم</th><th>الاسم</th><th>المسمى</th><th>القسم</th><th>المدير</th><th>سنوي</th><th>طبي</th><th>كلمة المرور</th><th></th></tr>' +
+    emps.map(function(x) {
+      var m = eById(x.mgrId);
+      return '<tr><td>' + esc(x.no) + '</td><td>' + esc(x.name) + '</td><td>' + esc(x.title) + '</td><td>' + esc(x.dept) + '</td><td>' + (m ? esc(m.name) : '—') + '</td><td>' + ((x.ann || 0) - (x.used || 0)) + '/' + (x.ann || 0) + '</td><td>' + (x.med || 0) + '</td>' +
+        '<td>' + pwCell(x) + '</td>' +
+        '<td><button class="btn btn-primary btn-sm" onclick="editEmpModal(' + x.id + ')">تعديل</button> <button class="btn btn-danger btn-sm" onclick="deleteEmp(' + x.id + ')">حذف</button></td></tr>';
+    }).join('') + '</table></div>' : '<div class="empty">لا يوجد موظفون. أضف أول موظف.</div>';
+  G(boxId).innerHTML = html;
+}
+
+function editEmpModal(id) {
+  var x = id ? eById(id) : null;
+  G('em-title').textContent = x ? 'تعديل موظف' : 'إضافة موظف';
+  G('em-id').value = id || 0;
+  G('em-no').value = x ? x.no : '';
+  G('em-name').value = x ? x.name : '';
+  G('em-title2').value = x ? x.title : '';
+  G('em-dept').innerHTML = deptOptions(x ? x.dept : '');
+  G('em-ps').value = x ? x.ps : '';
+  G('em-mps').value = x ? (x.mps || '') : '';
+  G('em-ann').value = x ? (x.ann || 0) : 21;
+  G('em-med').value = x ? (x.med || 0) : 15;
+  G('em-used').value = x ? (x.used || 0) : 0;
+  G('em-color').value = x && /^#[0-9a-f]{6}$/i.test(x.color || '') ? x.color : COLORS[Math.floor(Math.random() * COLORS.length)];
+  G('em-mgr').innerHTML = '<option value="0">— بدون مدير —</option>' + emps.filter(function(m){ return m.id !== id; }).map(function(m) {
+    return '<option value="' + m.id + '"' + (x && x.mgrId === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>';
+  }).join('');
+  openModal('emp-modal');
+}
+
+function saveEmp() {
+  var id = parseInt(G('em-id').value) || 0;
+  var name = G('em-name').value.trim();
+  if (!name) { alert('أدخل اسم الموظف'); return; }
+  var data = {
+    no: G('em-no').value.trim(), name: name, title: G('em-title2').value.trim(), dept: G('em-dept').value,
+    ps: G('em-ps').value, mps: G('em-mps').value, ann: parseInt(G('em-ann').value) || 0,
+    med: parseInt(G('em-med').value) || 0, used: parseInt(G('em-used').value) || 0,
+    mgrId: parseInt(G('em-mgr').value) || 0, color: G('em-color').value
+  };
+  if (id) {
+    var x = eById(id); if (!x) return;
+    if (data.ps !== (x.ps || '')) x.psSet = false;
+    Object.keys(data).forEach(function(k){ x[k] = data[k]; });
+  } else {
+    data.id = _d.neid++;
+    data.tp = rndTopic('e'); data.mtp = rndTopic('m'); data.psSet = false;
+    _d.emps.push(data); emps = _d.emps;
+  }
+  sv2();
+  closeModal('emp-modal');
+  refreshView();
+}
+
+function deleteEmp(id) {
+  var x = eById(id); if (!x) return;
+  if (!confirm('حذف الموظف "' + x.name + '" وكل طلباته؟')) return;
+  _d.emps = _d.emps.filter(function(e){ return e.id !== id; });
+  _d.emps.forEach(function(e){ if (e.mgrId === id) e.mgrId = 0; });
+  _d.reqs = _d.reqs.filter(function(r){ return r.eid !== id; });
+  emps = _d.emps; reqs = _d.reqs;
+  sv2();
+  refreshView();
+}
+
+function renderGSettings() {
+  ensureTopics();
+  var html = '<div class="card"><p class="sm">إدارة كلمات المرور واستيراد/تصدير البيانات.</p><div class="acts"><button class="btn btn-primary" onclick="openSettings()">فتح الإعدادات</button></div></div>' +
+    '<h3>قنوات الإشعارات (ntfy)</h3><div class="sm" style="margin-bottom:8px">كل شخص يستطيع أيضاً فتح زر 🔔 في صفحته ليجد قناته. لا ترسل هذه الأسماء إلا لأصحابها.</div>' +
+    topicCard('الموارد البشرية', _d.hrTopic || '');
+  emps.forEach(function(x) {
+    if (isMgrId(x.id)) html += topicCard(x.name + ' (كمدير)', x.mtp || '');
+    html += topicCard(x.name + ' (موظف)', x.tp || '');
+  });
+  G('gt-settings').innerHTML = html;
+}
+
+// ========== 11. Settings ==========
+function openSettings() {
+  G('st-setpw').value = '';
+  G('st-emp').value = _d.PW.emp; G('st-mgr').value = _d.PW.mgr; G('st-hr').value = _d.PW.hr; G('st-gm').value = _d.PW.gm;
+  G('st-newset').value = '';
+  openModal('settings-modal');
+}
+function savePasswords() {
+  if (G('st-setpw').value !== _d.SET_PW) { alert('كلمة مرور الإعدادات غير صحيحة'); return; }
+  var ep = G('st-emp').value.trim(), m = G('st-mgr').value.trim(), h = G('st-hr').value.trim(), g = G('st-gm').value.trim();
+  if (!ep || !m || !h || !g) { alert('لا يمكن ترك كلمة مرور فارغة'); return; }
+  _d.PW.emp = ep; _d.PW.mgr = m; _d.PW.hr = h; _d.PW.gm = g;
+  var ns = G('st-newset').value.trim();
+  if (ns) _d.SET_PW = ns;
+  sv2();
+  closeModal('settings-modal');
+  alert('✅ تم حفظ كلمات المرور');
+}
+function exportData() {
+  if (G('st-setpw').value !== _d.SET_PW) { alert('أدخل كلمة مرور الإعدادات أولاً'); return; }
+  download('haojin-leaves-' + new Date().toISOString().slice(0, 10) + '.json', JSON.stringify(_d, null, 2), 'application/json');
+}
+function importData(inp) {
+  var f = inp.files && inp.files[0];
+  if (!f) return;
+  if (G('st-setpw').value !== _d.SET_PW) { alert('أدخل كلمة مرور الإعدادات أولاً'); inp.value = ''; return; }
+  var rd = new FileReader();
+  rd.onload = function() {
+    try {
+      var obj = JSON.parse(rd.result);
+      if (!obj || typeof obj !== 'object' || !('emps' in obj)) throw new Error('bad');
+      if (!confirm('سيتم استبدال كل البيانات الحالية. متابعة؟')) { inp.value = ''; return; }
+      _d = obj; norm();
+      sv2();
+      closeModal('settings-modal');
+      refreshView();
+      alert('✅ تم استيراد البيانات');
+    } catch (e) { alert('ملف غير صالح'); }
+    inp.value = '';
+  };
+  rd.readAsText(f);
+}
+
+// ========== 12. PWA ==========
+function injectManifest() {
+  var manifest = {
+    name: 'إجازات هاوجين مصر', short_name: 'إجازات', start_url: '.', display: 'standalone',
+    background_color: '#ffffff', theme_color: '#1a73e8', dir: 'rtl', lang: 'ar',
+    icons: [{
+      src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a73e8'/><text y='.9em' font-size='80' x='10'>📅</text></svg>",
+      sizes: '192x192', type: 'image/svg+xml'
+    }]
+  };
+  var blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+  var link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = URL.createObjectURL(blob);
+  document.head.appendChild(link);
+}
+
+// ========== 13. Init ==========
+window.onload = function() {
+  injectManifest();
+  loadData();
+  fillLoginSelects();
+  showPage('pg-login');
+  restoreSession();
+  flushNtfy();
+};
+</script>
+</body>
+</html>
